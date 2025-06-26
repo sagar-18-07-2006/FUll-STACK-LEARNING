@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,3 +10,4 @@
     <video src="assets/New project.mp4" controls></video>
 </body>
 </html>
+if i would not write controls i will not able to play pause video
