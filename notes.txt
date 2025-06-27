@@ -11,3 +11,5 @@
 </body>
 </html>
 if i would not write controls i will not able to play pause video
+lorem 80
+it eill gentrate 80 words 
