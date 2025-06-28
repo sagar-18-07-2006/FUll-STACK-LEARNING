@@ -22,5 +22,15 @@ colspan =2 means it will take space of two columns
 rowspan =2 means it will take space of two 
 there are 3 type of list 
 ul
+type 
+square
+circle disc
 ol
+type 
+I for uppercase roman number 
+i for lowercase roman number 
+1 for numerical(Arabic) number 
+A for uppercase AlPHABETS  
+a for lowercase AlPHABETS  
+
 dl
