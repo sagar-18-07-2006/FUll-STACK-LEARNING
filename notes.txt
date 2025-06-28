@@ -20,3 +20,7 @@ width or height
 <td> table data
 colspan =2 means it will take space of two columns
 rowspan =2 means it will take space of two 
+there are 3 type of list 
+ul
+ol
+dl
