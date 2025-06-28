@@ -15,3 +15,8 @@ lorem 80
 it eill gentrate 80 words 
 play with one attribute at a time if you don't want to stretch image 
 width or height 
+<th> is for table heading
+<tr> table row
+<td> table data
+colspan =2 means it will take space of two columns
+rowspan =2 means it will take space of two 
