@@ -13,3 +13,5 @@
 if i would not write controls i will not able to play pause video
 lorem 80
 it eill gentrate 80 words 
+play with one attribute at a time if you don't want to stretch image 
+width or height 
