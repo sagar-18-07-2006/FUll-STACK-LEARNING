@@ -49,3 +49,6 @@ largest contentful paint
 should load in 2.5 ssec
 FID(first input delay)
 it should be less than 100millisecond 
+
+
+YOUR TITLE SHOULD REFLECT CONTENT GOOD SEO PRACRTTICE 
