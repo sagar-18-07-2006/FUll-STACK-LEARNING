@@ -52,3 +52,6 @@ it should be less than 100millisecond
 
 
 YOUR TITLE SHOULD REFLECT CONTENT GOOD SEO PRACRTTICE 
+get 
+post 
+if you want that from group of radio buttons one should be chosen at a time give them same name
