@@ -42,3 +42,10 @@ stands for search optimization
 page rank defined
 on basis of content
 core web vitals
+cls (Cummulative layout shift ) 
+stands for shift of page while loading
+it should be minimum 
+largest contentful paint 
+should load in 2.5 ssec
+FID(first input delay)
+it should be less than 100millisecond 
