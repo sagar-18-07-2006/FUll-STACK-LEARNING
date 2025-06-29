@@ -37,3 +37,8 @@ a for lowercase AlPHABETS
 
 dl
 
+seo
+stands for search optimization
+page rank defined
+on basis of content
+core web vitals
