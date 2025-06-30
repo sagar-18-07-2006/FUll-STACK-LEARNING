@@ -52,6 +52,14 @@ it should be less than 100millisecond
 
 
 YOUR TITLE SHOULD REFLECT CONTENT GOOD SEO PRACRTTICE 
-get 
+get request has limit and we don't send passwords in it 
 post 
 if you want that from group of radio buttons one should be chosen at a time give them same name
+and if you add label for radio buttton then you can chec k a radio buttton by clicking on label 
+required is used for mandatory fields 
+autofocus is used for having cursor on that 
+block elements 
+id unique id 
+class can given to some thing you want to give same css 
+class can be multiple by giving gap 
+class "<class1> <class2> <class3>"
