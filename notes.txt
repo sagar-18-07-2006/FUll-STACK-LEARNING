@@ -63,3 +63,10 @@ id unique id
 class can given to some thing you want to give same css 
 class can be multiple by giving gap 
 class "<class1> <class2> <class3>"
+ <video src="/assets/videos/New project.mp4"  height="255" controls autoplay loop></video>
+ autoplay  will play autoplay will make it play on its own 
+ controls gice it a play pause download ,playback speed mute 
+ loop will repeat this vid3eo 
+ muted video will mute vvideo by default 
+ poster will ask address of an image and sfoe it in video before it is play uiut will stop autoplay
+ preload git 
