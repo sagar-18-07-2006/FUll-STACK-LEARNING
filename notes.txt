@@ -69,4 +69,7 @@ class "<class1> <class2> <class3>"
  loop will repeat this vid3eo 
  muted video will mute vvideo by default 
  poster will ask address of an image and sfoe it in video before it is play uiut will stop autoplay
- preload git 
+ preload 
+ none default
+ meta data will allow to preloa the m,eta data of audio file 
+ auto will preload that file
