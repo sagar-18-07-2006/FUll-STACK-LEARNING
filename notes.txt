@@ -90,3 +90,6 @@ Common HTML Entities
 &copy; for ©
 
 <pre></pre> tag preserve new lines and spaces you given in code
+Both <blockquote> and <q> tags support the cite attribute:
+
+cite: Specifies the URL of the quote's source.
