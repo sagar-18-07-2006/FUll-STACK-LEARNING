@@ -82,3 +82,9 @@ class "<class1> <class2> <class3>"
 <figure> and <figcaption>: Used for embedding images, diagrams, or charts, along with a caption.
 <main>: Signifies the main content area of a web page.
 <time>: Used to represent time-related information, like dates and times.
+Common HTML Entities
+&lt;  for <
+&gt;  for >
+&amp; for &
+&nbsp; for a non-breaking space
+&copy; for ©
