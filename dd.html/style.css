@@ -1,0 +1,106 @@
+ * {
+box-sizing: border-box;
+font-family: ‘Montserrat’;
+font-size: 14px;
+}
+body{
+  background: rgb(47, 132, 218);
+}
+.container {
+position: relative;
+width: 100%;
+margin: 100px auto;
+background: #ecf0f1;
+border-radius: 10px;
+max-width: 800px;
+height: 500px;
+}
+.signup, .login {
+position: relative;
+float: left;
+width: 50%;
+height: 100%;
+}
+.signup .btn, .login .btn {
+position: absolute;
+margin-left: auto;
+margin-right: auto;
+left: 0;
+right: 0;
+bottom: 50px;
+}
+.form-container {
+position: absolute;
+z-index: 1;
+top: -20px;
+bottom: -20px;
+padding-top: 30px;
+overflow: hidden;
+transition: .7s;
+background: #fff;
+width: 50%;
+box-shadow: 0 0 60px -10px rgba(19, 207, 164, 0.57);
+border: 5px solid rgb(7, 74, 122);
+}
+.btn {
+width: 150px;
+color: #fff;
+border-radius: 5px;
+border: none;
+letter-spacing: .7px;
+text-align: center;
+z-index: 2;
+cursor: pointer;
+padding: 13px 25px;
+font-size: 18px;
+font-weight: 300;
+}
+.btn:hover {
+opacity: 0.85;
+}
+.btn-primary {
+background: #009e5b;
+}
+.btn-secondary {
+background: #0f6fb9;
+}
+input {
+border: none;
+display: block;
+margin: 40px auto;
+transition: .7s;
+border-bottom: 1.5px solid #878b8c;
+padding: 7px 3px;
+width: 70%;
+}
+input::placeholder {
+color: rgba(15, 89, 194, 0.98);
+font-size: 17px;
+}
+input:focus {
+  border-top: transparent;
+transition: 200ms;
+outline-style:none;
+box-shadow: 0 1px 0 #bdc3c7;
+}
+input[type=“radio”] {
+display: none;
+z-index: 20;
+top: 0;
+left: 0;
+}
+#signupChecked:checked + .form-container {
+left: 0;
+}
+#signupChecked:not(:checked) + .form-container {
+left: 50%;
+}
+#signupChecked:not(:checked) + .form-container input[type=“text”]:nth-child(1) {
+margin-top: -90px;
+opacity: 0;
+visibility: 0;
+}
+#signupChecked:not(:checked) + .form-container input[type=“text”]:nth-child(2) {
+opacity: 0;
+visibility: 0;
+}
