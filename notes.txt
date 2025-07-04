@@ -93,3 +93,4 @@ Common HTML Entities
 Both <blockquote> and <q> tags support the cite attribute:
 
 cite: Specifies the URL of the quote's source.
+<code>Your code here</code> it is a code tag
