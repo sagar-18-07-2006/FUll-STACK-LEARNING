@@ -88,3 +88,5 @@ Common HTML Entities
 &amp; for &
 &nbsp; for a non-breaking space
 &copy; for ©
+
+<pre></pre> tag preserve new lines and spaces you given in code
