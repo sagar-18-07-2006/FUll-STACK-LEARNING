@@ -94,3 +94,22 @@ Both <blockquote> and <q> tags support the cite attribute:
 
 cite: Specifies the URL of the quote's source.
 <code>Your code here</code> it is a code tag
+two type of selector
+1 child if it is in same position then css implies
+2 decendent selectorit should be inside it only
+3 universal selector
+   /* child slector */
+        div>p{
+            background-color: brown ;
+        color:    red   }
+        /* Decendent selector */
+        div p {
+            font-size: xx-large;
+        }
+        /*Universal Selector*/
+      *{
+            margin: 0;
+            padding: 0;
+        }
+everything is box in CSS
+margin -> Border ->Padding ->content
