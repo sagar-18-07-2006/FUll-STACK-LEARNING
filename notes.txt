@@ -113,3 +113,15 @@ two type of selector
         }
 everything is box in CSS
 margin -> Border ->Padding ->content
+ .box1{
+            color: yellow;
+            padding: 10px;
+            margin: 10px;
+            border: 2px solid salmon;
+            height: 200px;
+            box-sizing: border-box;
+        }
+        height include padding bordeer
+
+margin collapse 
+if 2 objects margin are diffrent between them then max margin is only used 
