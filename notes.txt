@@ -163,3 +163,5 @@ Inline styles: 1000
             background-color: rebeccapurple;
         }
 h1.yellow ki specifity 11 hoti hai
+minheight \
+max width 
