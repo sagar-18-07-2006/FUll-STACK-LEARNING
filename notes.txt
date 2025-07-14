@@ -125,3 +125,41 @@ margin -> Border ->Padding ->content
 
 margin collapse 
 if 2 objects margin are diffrent between them then max margin is only used 
+  div p {
+            color: blue;
+            background-color: white;
+        }
+
+        div p:first-of-type {
+            color: red;
+            background-color: yellow;
+        }
+it's 2nd part justapply on first para on div 
+specifility 
+inline style -> Id selector -> class or Attribute selector or pseudo   -> element selector -> universal selector 
+but if you write imporatnt in property then that will imply over inline css
+Specificity Calculation
+To calculate specificity, assign a value to each part of the selector:
+
+Universal Selector: 0
+Element selectors and pseudo-elements: 1
+Class selectors, attribute selectors, and pseudo-classes: 10
+ID selectors: 100
+Inline styles: 1000
+        .yellow{
+            color: yellow;
+        }
+        .cpurple
+        {
+            color:purple;
+        }
+        .cred{
+            color: red;
+        }
+        h1{
+            color: aqua;
+        }
+        [data-x="a"]{
+            background-color: rebeccapurple;
+        }
+h1.yellow ki specifity 11 hoti hai
