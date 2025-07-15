@@ -168,3 +168,6 @@ max width
 % is part of parent container\
 display inline karne se width cj=hange nahi kar sakte 
 display inline block karne se kar sakte hai
+
+shadows property 
+box-shadow: h-offset v-offset blur spread color inset;
