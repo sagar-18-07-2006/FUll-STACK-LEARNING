@@ -178,3 +178,7 @@ Position: Outlines don't take up space; they're drawn around the element, outsid
 Offset: Using the outline-offset property, you can set the space between an outline and the edge or border of an element.
 Width: Borders can have varying widths on different sides, outlines have a uniform width.
 Rounded Corners: Borders can have rounded corners using border-radius, while outlines generally cannot.
+    /* overflow: scroll; */
+
+            overflow: auto;
+            diffrence ye hai ki auto mien scroll bar jab aayega jab overflow hoga magar scroll mien hamesha aayega

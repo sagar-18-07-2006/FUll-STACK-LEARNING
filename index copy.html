@@ -3,35 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar Maheshwari - Full Stack Developer</title>
+    <title>Sagar Maheshwari - Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2ecc71;
-            --dark-bg: #0a192f;
-            --light-text: #ccd6f6;
+            /* Light mode variables */
+            --primary-color-light: #2ecc71;
+            --primary-dark-light: #27ae60;
+            --secondary-color-light: #3498db;
+            --bg-light: #f8f9fa;
+            --darker-bg-light: #e9ecef;
+            --text-light: #212529;
+            --lighter-text-light: #495057;
+            --card-bg-light: #ffffff;
+            --card-shadow-light: 0 10px 20px rgba(0,0,0,0.05);
+            
+            /* Dark mode variables */
+            --primary-color-dark: #2ecc71;
+            --primary-dark-dark: #27ae60;
+            --secondary-color-dark: #3498db;
+            --bg-dark: #0a192f;
+            --darker-bg-dark: #071120;
+            --text-dark: #ccd6f6;
+            --lighter-text-dark: #e6f1ff;
+            --card-bg-dark: rgba(255, 255, 255, 0.05);
+            --card-shadow-dark: 0 10px 20px rgba(0,0,0,0.2);
+            
+            /* Common variables */
             --section-spacing: 80px;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --header-bg: rgba(10, 25, 47, 0.85);
+            --transition: all 0.3s ease;
         }
 
-        [data-theme="light"] {
-            --dark-bg: #f5f7fa;
-            --light-text: #2d3748;
-            --primary-color: #3498db;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --header-bg: rgba(245, 247, 250, 0.9);
+        /* Apply dark theme by default */
+        :root {
+            --primary-color: var(--primary-color-dark);
+            --primary-dark: var(--primary-dark-dark);
+            --secondary-color: var(--secondary-color-dark);
+            --bg: var(--bg-dark);
+            --darker-bg: var(--darker-bg-dark);
+            --text: var(--text-dark);
+            --lighter-text: var(--lighter-text-dark);
+            --card-bg: var(--card-bg-dark);
+            --card-shadow: var(--card-shadow-dark);
         }
 
-        [data-theme="neon"] {
-            --primary-color: #ff00ff;
-            --dark-bg: #0a0a1a;
-            --light-text: #e0e0ff;
-            --card-bg: rgba(20, 10, 40, 0.6);
-            --header-bg: rgba(10, 5, 25, 0.9);
+        body.light-mode {
+            --primary-color: var(--primary-color-light);
+            --primary-dark: var(--primary-dark-light);
+            --secondary-color: var(--secondary-color-light);
+            --bg: var(--bg-light);
+            --darker-bg: var(--darker-bg-light);
+            --text: var(--text-light);
+            --lighter-text: var(--lighter-text-light);
+            --card-bg: var(--card-bg-light);
+            --card-shadow: var(--card-shadow-light);
         }
 
         * {
@@ -41,12 +69,12 @@
         }
 
         body {
-            background-color: transparent;
-            color: var(--light-text);
+            background-color: var(--bg);
+            color: var(--text);
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background-color 0.5s ease;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
         
         #webglCanvas {
@@ -61,7 +89,7 @@
         /* Header */
         .header {
             padding: 1.5rem 5%;
-            background-color: var(--header-bg);
+            background-color: rgba(10, 25, 47, 0.85);
             position: fixed;
             width: 100%;
             top: 0;
@@ -71,30 +99,34 @@
             align-items: center;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            transition: background-color 0.5s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+
+        .light-mode .header {
+            background-color: rgba(248, 249, 250, 0.85);
+        }
+
+        .header.scrolled {
+            padding: 1rem 5%;
+            background-color: rgba(7, 17, 31, 0.95);
+        }
+
+        .light-mode .header.scrolled {
+            background-color: rgba(233, 236, 239, 0.95);
         }
 
         .logo {
             font-size: 1.8rem;
             color: var(--primary-color);
             font-weight: 700;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .logo:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .logo:hover:after {
-            width: 100%;
+        .logo i {
+            font-size: 1.5rem;
         }
 
         .nav-links {
@@ -104,36 +136,82 @@
         }
 
         .nav-links a {
-            color: var(--light-text);
+            color: var(--text);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: var(--transition);
             font-weight: 500;
             font-size: 1.1rem;
             position: relative;
+            padding: 0.5rem 0;
         }
 
         .nav-links a:after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: 0;
             left: 0;
             width: 0;
             height: 2px;
             background: var(--primary-color);
-            transition: width 0.3s ease;
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
+            transition: var(--transition);
         }
 
         .nav-links a:hover {
             color: var(--primary-color);
         }
 
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            background: var(--darker-bg);
+            border: none;
+            width: 50px;
+            height: 24px;
+            border-radius: 12px;
+            position: relative;
+            cursor: pointer;
+            margin-left: 15px;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .light-mode .theme-toggle::before {
+            transform: translateX(26px);
+            background: var(--secondary-color);
+        }
+
+        .theme-toggle i {
+            position: absolute;
+            top: 3px;
+            font-size: 16px;
+            color: var(--bg);
+        }
+
+        .theme-toggle .fa-moon {
+            left: 5px;
+        }
+
+        .theme-toggle .fa-sun {
+            right: 5px;
+        }
+
         /* Hero Section */
         .hero {
-            padding: 150px 5% 60px;
+            padding: 180px 5% 60px;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -153,47 +231,30 @@
             text-align: center;
         }
 
-        .hero-title {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            background: linear-gradient(45deg, var(--primary-color), #3498db);
+        .hero-name {
+            font-size: 4.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            line-height: 1.2;
-            height: 4.5rem;
-            overflow: hidden;
+            line-height: 1.1;
+            letter-spacing: -1px;
         }
 
-        .typewriter-text {
-            display: inline-block;
-            border-right: 2px solid var(--primary-color);
-            padding-right: 5px;
-            animation: blink 0.75s step-end infinite;
-        }
-
-        @keyframes blink {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary-color) }
+        .hero-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            color: var(--lighter-text);
         }
 
         .hero-description {
             font-size: 1.3rem;
             max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
             font-weight: 300;
-        }
-
-        .hero-about {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-weight: 300;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 3px solid var(--primary-color);
         }
 
         .hero-image {
@@ -201,7 +262,13 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            box-shadow: var(--card-shadow);
+            transform: perspective(1000px) rotateY(5deg);
+            transition: var(--transition);
+        }
+
+        .hero-image:hover {
+            transform: perspective(1000px) rotateY(0deg);
         }
 
         .profile-img {
@@ -214,18 +281,20 @@
         
         .cta-button {
             display: inline-block;
-            background: linear-gradient(45deg, var(--primary-color), #3498db);
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 12px 30px;
+            padding: 14px 35px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: 600;
             font-size: 1.1rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
             position: relative;
             overflow: hidden;
             z-index: 1;
+            border: none;
+            cursor: pointer;
         }
 
         .cta-button:before {
@@ -235,8 +304,8 @@
             left: 0;
             width: 0;
             height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
+            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
+            transition: var(--transition);
             z-index: -1;
         }
 
@@ -257,90 +326,8 @@
             -webkit-backdrop-filter: blur(8px);
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .skill-category {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border-color: rgba(46, 204, 113, 0.2);
-        }
-
-        .skill-category h3 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 1.4rem;
-        }
-
-        .skill-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .skill-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(46, 204, 113, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-
-        .skill-name {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .skill-level {
-            width: 100px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .skill-level-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: var(--primary-color);
-            border-radius: 3px;
-        }
-
-        /* Projects Section */
-        .projects {
-            padding: var(--section-spacing) 5%;
-            background: rgba(10, 25, 47, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        .light-mode .skills {
+            background: rgba(248, 249, 250, 0.85);
         }
 
         .section-title {
@@ -363,6 +350,110 @@
             border-radius: 2px;
         }
 
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-category {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .light-mode .skill-category {
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(46, 204, 113, 0.2);
+        }
+
+        .light-mode .skill-category:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .skill-category-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .skill-category-title i {
+            font-size: 1.8rem;
+        }
+
+        /* Enhanced Skill Items with Progress Bars */
+        .skill-item {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-percent {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+
+        .skill-bar {
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .light-mode .skill-bar {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 5px;
+            transition: width 1s ease-out;
+            width: 0;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: var(--section-spacing) 5%;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .light-mode .projects {
+            background: rgba(248, 249, 250, 0.85);
+        }
+
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -375,34 +466,42 @@
             background: var(--card-bg);
             border-radius: 10px;
             padding: 1.5rem;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: 1px solid rgba(255, 255, 255, 0.05);
             position: relative;
             overflow: hidden;
-            cursor: pointer;
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            border-color: rgba(46, 204, 113, 0.2);
+        .light-mode .project-card {
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .project-card:after {
+        .project-card:before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(46, 204, 113, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
         }
 
-        .project-card:hover:after {
-            opacity: 1;
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--card-shadow);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(46, 204, 113, 0.2);
+        }
+
+        .light-mode .project-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .project-card:hover:before {
+            transform: scaleX(1);
         }
 
         .project-image {
@@ -417,18 +516,6 @@
             justify-content: center;
             color: white;
             font-size: 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(0,0,0,0.2));
         }
 
         .project-title {
@@ -438,7 +525,7 @@
         }
         
         .project-date {
-            color: #8892b0;
+            color: var(--lighter-text);
             font-size: 0.9rem;
             margin-bottom: 1rem;
             display: block;
@@ -460,25 +547,6 @@
             border: 1px solid rgba(46, 204, 113, 0.2);
         }
 
-        .project-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-        }
-
-        .project-link i {
-            margin-left: 5px;
-            transition: transform 0.3s ease;
-        }
-
-        .project-link:hover i {
-            transform: translateX(5px);
-        }
-
         /* Contact Section */
         .contact {
             padding: var(--section-spacing) 5%;
@@ -488,18 +556,21 @@
             -webkit-backdrop-filter: blur(8px);
         }
 
+        .light-mode .contact {
+            background: rgba(248, 249, 250, 0.85);
+        }
+
         .contact-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
             margin-top: 2rem;
-            flex-wrap: wrap;
         }
 
         .contact-link {
             font-size: 2.5rem;
-            color: var(--light-text);
-            transition: all 0.3s;
+            color: var(--text);
+            transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -512,27 +583,31 @@
             overflow: hidden;
         }
 
-        .contact-link:after {
+        .light-mode .contact-link {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-link:before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary-color), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .contact-link:hover:after {
-            opacity: 0.3;
+            height: 0;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            transition: height 0.3s ease;
+            z-index: -1;
         }
 
         .contact-link:hover {
-            color: var(--primary-color);
+            color: white;
             transform: translateY(-5px);
-            background: rgba(46, 204, 113, 0.1);
-            border-color: rgba(46, 204, 113, 0.3);
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+        }
+
+        .contact-link:hover:before {
+            height: 100%;
         }
 
         /* Footer */
@@ -541,42 +616,46 @@
             text-align: center;
             background: rgba(10, 15, 30, 0.9);
             font-size: 0.9rem;
-            color: #8892b0;
-            position: relative;
+            color: var(--lighter-text);
         }
 
-        .theme-toggle {
+        .light-mode .footer {
+            background: rgba(233, 236, 239, 0.9);
+        }
+
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .scroll-top {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 30px;
+            right: 30px;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
             background: var(--primary-color);
             color: white;
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.5rem;
             cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            border: none;
-            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.4);
         }
 
-        .theme-toggle:hover {
-            transform: rotate(20deg) scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        .scroll-top.show {
+            opacity: 1;
+            visibility: visible;
         }
 
-        .visitor-counter {
-            background: var(--card-bg);
-            padding: 10px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-top: 15px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        .scroll-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
         }
 
         @media (min-width: 768px) {
@@ -588,8 +667,12 @@
                 text-align: left;
             }
             
+            .hero-name {
+                font-size: 5rem;
+            }
+            
             .hero-title {
-                font-size: 3.5rem;
+                font-size: 2.2rem;
             }
 
             .profile-img {
@@ -612,19 +695,24 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--dark-bg);
-                padding: 1rem;
+                background: var(--bg);
+                padding: 1.5rem;
                 text-align: center;
+                box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            }
+
+            .light-mode .nav-links {
+                background: var(--bg);
             }
 
             .nav-links.active {
                 display: flex;
                 flex-direction: column;
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
-            .hero-title {
-                font-size: 2.5rem;
+            .hero-name {
+                font-size: 3.5rem;
             }
             
             .hero-content {
@@ -635,19 +723,20 @@
                 display: block;
                 background: none;
                 border: none;
-                color: var(--light-text);
+                color: var(--text);
                 font-size: 1.5rem;
                 cursor: pointer;
+                transition: var(--transition);
+            }
+            
+            .menu-toggle:hover {
+                color: var(--primary-color);
             }
             
             .contact-link {
                 width: 60px;
                 height: 60px;
                 font-size: 2rem;
-            }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
             }
         }
         
@@ -690,59 +779,6 @@
             transition: width 0.3s ease; 
             border-radius: 3px;
         }
-
-        /* Easter Egg */
-        .easter-egg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .easter-egg.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .easter-egg-content {
-            background: var(--dark-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 500px;
-            text-align: center;
-            border: 2px solid var(--primary-color);
-            position: relative;
-        }
-
-        .easter-egg h2 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .easter-egg p {
-            margin-bottom: 1.5rem;
-        }
-
-        .close-egg {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--light-text);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -751,18 +787,6 @@
         <span>Initializing Portfolio...</span>
         <div id="progress-container">
              <div id="progress"></div>
-        </div>
-    </div>
-
-    <!-- Easter Egg -->
-    <div class="easter-egg" id="easterEgg">
-        <div class="easter-egg-content">
-            <button class="close-egg" id="closeEgg">&times;</button>
-            <h2>🎉 Easter Egg Discovered! 🎉</h2>
-            <p>Congratulations on finding this hidden feature! You've proven to have an eye for detail.</p>
-            <p>As a reward, here's a special message:</p>
-            <p>"The best way to predict the future is to create it." - Peter Drucker</p>
-            <p>Keep building amazing things!</p>
         </div>
     </div>
 
@@ -783,14 +807,12 @@
 
     <canvas id="webglCanvas"></canvas>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
-
     <!-- Portfolio Content -->
     <header class="header">
-        <div class="logo">Sagar</div>
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            Sagar
+        </div>
         <nav>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -799,150 +821,207 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
+        <button class="theme-toggle">
+            <i class="fas fa-moon"></i>
+            <i class="fas fa-sun"></i>
+        </button>
         <button class="menu-toggle">☰</button>
     </header>
 
     <section class="hero" id="home">
         <div class="hero-content">
             <div class="hero-text">
-                <h1 class="hero-title">
-                    <span id="typewriter" class="typewriter-text"></span>
-                </h1>
+                <h1 class="hero-name">Sagar Maheshwari</h1>
+                <h2 class="hero-title">Full Stack Developer & CS Student</h2>
                 <p class="hero-description">
-                    I build innovative digital solutions using modern technologies with a focus on clean code and user experience.
-                </p>
-                <p class="hero-about">
-                    I'm Sagar Maheshwari, a passionate CS student and full-stack developer with a love for AI-powered digital solutions and clean, interactive web experiences.
+                    I build innovative digital solutions using modern technologies with a focus on clean code and exceptional user experiences.
                 </p>
                 <a href="#projects" class="cta-button">View My Work</a>
             </div>
             <div class="hero-image">
                 <div class="profile-img">
-                    <i class="fas fa-user-circle" style="font-size: 18rem; color: rgba(255,255,255,0.1);"></i>
+                    <i class="fas fa-user-circle" style="font-size: 18rem; color: rgba(0,0,0,0.1);"></i>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="skills" id="skills">
-        <h2 class="section-title">Skills & Technologies</h2>
+        <h2 class="section-title">Technical Skills</h2>
         <div class="skills-grid">
             <div class="skill-category">
-                <h3>Frontend</h3>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-js"></i>
+                <h3 class="skill-category-title"><i class="fas fa-laptop-code"></i> Frontend</h3>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-html5"></i> HTML5</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="95"></div>
+                        </div>
                     </div>
-                    <div class="skill-name">JavaScript</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 90%"></div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-css3-alt"></i> CSS3</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="90"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-react"></i>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-js"></i> JavaScript</span>
+                            <span class="skill-percent">92%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="92"></div>
+                        </div>
                     </div>
-                    <div class="skill-name">React</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 85%"></div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-react"></i> React.js</span>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="88"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-vuejs"></i>
-                    </div>
-                    <div class="skill-name">Vue.js</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <div class="skill-name">HTML5</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 95%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <div class="skill-name">CSS3</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 90%"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="skill-category">
-                <h3>Backend</h3>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-node"></i>
-                    </div>
-                    <div class="skill-name">Node.js</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 80%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <div class="skill-name">Express</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="skill-name">MongoDB</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="skill-name">Firebase</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 70%"></div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-vuejs"></i> Vue.js</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="85"></div>
+                        </div>
                     </div>
                 </div>
             </div>
             
             <div class="skill-category">
-                <h3>AI & Data</h3>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-brain"></i>
+                <h3 class="skill-category-title"><i class="fas fa-server"></i> Backend</h3>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-node-js"></i> Node.js</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="90"></div>
+                        </div>
                     </div>
-                    <div class="skill-name">Python</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 85%"></div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-database"></i> MongoDB</span>
+                            <span class="skill-percent">87%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="87"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-database"></i> MySQL</span>
+                            <span class="skill-percent">83%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="83"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-fire"></i> Firebase</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="85"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-chart-line"></i>
+            </div>
+            
+            <div class="skill-category">
+                <h3 class="skill-category-title"><i class="fas fa-tools"></i> Tools & Technologies</h3>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-git-alt"></i> Git</span>
+                            <span class="skill-percent">92%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="92"></div>
+                        </div>
                     </div>
-                    <div class="skill-name">Data Analysis</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 75%"></div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-terminal"></i> CLI</span>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="88"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fab fa-docker"></i> Docker</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="80"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-cloud"></i> AWS</span>
+                            <span class="skill-percent">82%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="82"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-robot"></i>
+            </div>
+            
+            <div class="skill-category">
+                <h3 class="skill-category-title"><i class="fas fa-brain"></i> Core Concepts</h3>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-sitemap"></i> OOP</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="90"></div>
+                        </div>
                     </div>
-                    <div class="skill-name">Machine Learning</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 65%"></div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-project-diagram"></i> Data Structures</span>
+                            <span class="skill-percent">88%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="88"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-calculator"></i> Algorithms</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="85"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <div class="skill-info">
+                            <span class="skill-name"><i class="fas fa-network-wired"></i> System Design</span>
+                            <span class="skill-percent">83%</span>
+                        </div>
+                        <div class="skill-bar">
+                            <div class="skill-progress" data-percent="83"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -953,7 +1032,7 @@
         <h2 class="section-title">Featured Projects</h2>
         <div class="project-grid">
             <!-- Bingbox Project -->
-            <div class="project-card" onclick="window.open('https://bingbox-movie-search.netlify.app', '_blank')">
+            <div class="project-card">
                 <div class="project-image">
                     <i class="fas fa-film"></i>
                 </div>
@@ -965,13 +1044,10 @@
                     <span class="tech-item">TMDB API</span>
                 </div>
                 <p>A movie discovery platform with real-time search and recommendations using the TMDB database.</p>
-                <a href="https://bingbox-movie-search.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
 
             <!-- Other Projects -->
-            <div class="project-card" onclick="window.open('https://ecommerce-store-sagar.netlify.app', '_blank')">
+            <div class="project-card">
                 <div class="project-image">
                     <i class="fas fa-shopping-cart"></i>
                 </div>
@@ -983,12 +1059,9 @@
                     <span class="tech-item">Stripe API</span>
                 </div>
                 <p>Full-featured online shopping platform with payment integration and inventory management.</p>
-                <a href="https://ecommerce-store-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
 
-            <div class="project-card" onclick="window.open('https://task-manager-sagar.netlify.app', '_blank')">
+            <div class="project-card">
                 <div class="project-image">
                     <i class="fas fa-tasks"></i>
                 </div>
@@ -1000,12 +1073,9 @@
                     <span class="tech-item">JWT</span>
                 </div>
                 <p>Collaborative task management system with real-time updates and team collaboration features.</p>
-                <a href="https://task-manager-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
             
-            <div class="project-card" onclick="window.open('https://financial-dashboard-sagar.netlify.app', '_blank')">
+            <div class="project-card">
                 <div class="project-image">
                     <i class="fas fa-chart-line"></i>
                 </div>
@@ -1017,12 +1087,9 @@
                     <span class="tech-item">Express</span>
                 </div>
                 <p>Interactive financial data visualization dashboard with real-time updates and analytics.</p>
-                <a href="https://financial-dashboard-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
             
-            <div class="project-card" onclick="window.open('https://ai-chatbot-sagar.netlify.app', '_blank')">
+            <div class="project-card">
                 <div class="project-image">
                     <i class="fas fa-robot"></i>
                 </div>
@@ -1034,12 +1101,9 @@
                     <span class="tech-item">WebSockets</span>
                 </div>
                 <p>Natural language processing chatbot with sentiment analysis and personalized responses.</p>
-                <a href="https://ai-chatbot-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
             
-            <div class="project-card" onclick="window.open('https://fitness-tracker-sagar.netlify.app', '_blank')">
+            <div class="project-card">
                 <div class="project-image">
                     <i class="fas fa-mobile-alt"></i>
                 </div>
@@ -1051,9 +1115,6 @@
                     <span class="tech-item">Health API</span>
                 </div>
                 <p>Mobile application for tracking workouts, nutrition, and health metrics with personalized plans.</p>
-                <a href="https://fitness-tracker-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
         </div>
     </section>
@@ -1082,10 +1143,11 @@
     <footer class="footer">
         <p>© 2024 Sagar Maheshwari. All rights reserved.</p>
         <p>Designed and developed with ❤️</p>
-        <div class="visitor-counter">
-            <i class="fas fa-users"></i> Visitors: <span id="visitorCount">1,247</span>
-        </div>
     </footer>
+
+    <div class="scroll-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <script type="importmap">
       {
@@ -1120,7 +1182,7 @@
         let isMorphing = false;
 
         const CONFIG = {
-            particleCount: 15000,
+            particleCount: window.innerWidth < 768 ? 8000 : 15000,
             shapeSize: 14,
             swarmDistanceFactor: 1.5,
             swirlFactor: 4.0,
@@ -1130,12 +1192,11 @@
             colorScheme: 'neon',
             morphDuration: 4000,
             particleSizeRange: [0.08, 0.25],
-            starCount: 18000,
+            starCount: window.innerWidth < 768 ? 12000 : 18000,
             bloomStrength: 1.3,
             bloomRadius: 0.5,
             bloomThreshold: 0.05,
             idleFlowStrength: 0.25,
-            idleFlowSpeed: 0.08,
             idleRotationSpeed: 0.02,
             morphSizeFactor: 0.5, 
             morphBrightnessFactor: 0.6 
@@ -1603,7 +1664,7 @@
 
         function updateIdleAnimation(positions, effectStrengths, elapsedTime, deltaTime) {
             const breathScale = 1.0 + Math.sin(elapsedTime * 0.5) * 0.015;
-            const timeScaled = elapsedTime * CONFIG.idleFlowSpeed;
+            const timeScaled = elapsedTime * CONFIG.idleFlowStrength;
             const freq = 0.1;
 
             let needsEffectStrengthReset = false;
@@ -1645,6 +1706,23 @@
         // Mobile Menu Toggle
         const menuToggle = document.querySelector('.menu-toggle');
         const navLinks = document.querySelector('.nav-links');
+        const header = document.querySelector('.header');
+        const themeToggle = document.querySelector('.theme-toggle');
+        const body = document.body;
+        
+        // Theme toggle
+        function toggleTheme() {
+            body.classList.toggle('light-mode');
+            localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
+        }
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+        }
+        
+        themeToggle.addEventListener('click', toggleTheme);
 
         menuToggle.addEventListener('click', () => {
             navLinks.classList.toggle('active');
@@ -1666,117 +1744,62 @@
             });
         });
 
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll to top button
+        const scrollTopBtn = document.querySelector('.scroll-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('show');
+            } else {
+                scrollTopBtn.classList.remove('show');
+            }
+        });
+        
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
         // Intersection Observer for Animations
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
                     entry.target.style.opacity = 1;
                     entry.target.style.transform = 'translateY(0)';
+                    
+                    // Animate skill progress bars
+                    if (entry.target.classList.contains('skill-progress')) {
+                        const percent = entry.target.dataset.percent;
+                        entry.target.style.width = `${percent}%`;
+                    }
                 }
             });
         }, { threshold: 0.1 });
 
-        document.querySelectorAll('.project-card').forEach(card => {
+        document.querySelectorAll('.project-card, .skill-category').forEach(card => {
             card.style.opacity = 0;
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'all 0.4s ease-out';
             observer.observe(card);
         });
-
-        // Typewriter Effect
-        const typewriterText = document.getElementById('typewriter');
-        const texts = ["Full Stack Developer & CS Student", "AI Enthusiast", "Creative Problem Solver"];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
         
-        function typeWriter() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typewriterText.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typewriterText.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => isDeleting = true, 1500);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-            }
-            
-            setTimeout(typeWriter, isDeleting ? 50 : 100);
-        }
-        
-        setTimeout(typeWriter, 1000);
-
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        const body = document.body;
-        let currentTheme = 'dark';
-        
-        themeToggle.addEventListener('click', () => {
-            if (currentTheme === 'dark') {
-                body.setAttribute('data-theme', 'light');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                currentTheme = 'light';
-            } else if (currentTheme === 'light') {
-                body.setAttribute('data-theme', 'neon');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-star');
-                currentTheme = 'neon';
-            } else {
-                body.removeAttribute('data-theme');
-                themeIcon.classList.remove('fa-star');
-                themeIcon.classList.add('fa-moon');
-                currentTheme = 'dark';
-            }
+        // Initialize skill progress bars
+        document.querySelectorAll('.skill-progress').forEach(bar => {
+            bar.style.width = '0';
+            bar.dataset.percent = bar.parentElement.previousElementSibling.querySelector('.skill-percent').textContent.replace('%', '');
+            observer.observe(bar);
         });
-
-        // Easter Egg
-        const easterEgg = document.getElementById('easterEgg');
-        const closeEgg = document.getElementById('closeEgg');
-        let clickCount = 0;
-        let lastClickTime = 0;
-        
-        document.addEventListener('click', (e) => {
-            // Check if clicked in top-right corner
-            if (e.clientX > window.innerWidth - 100 && e.clientY < 100) {
-                const currentTime = new Date().getTime();
-                
-                if (currentTime - lastClickTime < 1000) {
-                    clickCount++;
-                } else {
-                    clickCount = 1;
-                }
-                
-                lastClickTime = currentTime;
-                
-                if (clickCount === 3) {
-                    easterEgg.classList.add('active');
-                    clickCount = 0;
-                }
-            }
-        });
-        
-        closeEgg.addEventListener('click', () => {
-            easterEgg.classList.remove('active');
-        });
-
-        // Visitor Counter
-        const visitorCount = document.getElementById('visitorCount');
-        let count = 1247;
-        
-        // Simulate visitor count increasing
-        setInterval(() => {
-            count += Math.floor(Math.random() * 3);
-            visitorCount.textContent = count.toLocaleString();
-        }, 30000);
     </script>
 </body>
-</html>
+</html>                     
