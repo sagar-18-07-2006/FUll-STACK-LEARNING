@@ -171,3 +171,10 @@ display inline block karne se kar sakte hai
 
 shadows property 
 box-shadow: h-offset v-offset blur spread color inset;
+Differences between Outlines and Borders:
+While both can visually appear similar, outlines differ from borders in a few ways:
+
+Position: Outlines don't take up space; they're drawn around the element, outside of any border.
+Offset: Using the outline-offset property, you can set the space between an outline and the edge or border of an element.
+Width: Borders can have varying widths on different sides, outlines have a uniform width.
+Rounded Corners: Borders can have rounded corners using border-radius, while outlines generally cannot.
