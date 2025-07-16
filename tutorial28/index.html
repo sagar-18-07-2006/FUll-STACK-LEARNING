@@ -18,33 +18,48 @@
             margin: 3px;
             padding: 3px;
         }
-        .box1{
+
+        .box1 {
             background-color: aqua;
-            position: relative;
-            z-index: 1;
+            /* position: relative;
+            z-index: 1; */
+            position: absolute;
+            top: 0px;
         }
-        .box2
-        {
-            background-color: rgb(170, 49, 154) ;
-            position:relative;
+
+        .box2 {
+            background-color: rgb(170, 49, 154);
+            /* position: relative;
             left: 89px;
             z-index: -1;
-            bottom: 60px;
+            bottom: 60px; */
         }
-        .box3{
+
+        .box3 {
             background-color: darkgreen;
         }
-        .box4{
+
+        .box4 {
             background-color: gold;
+        }
+
+        .parent {
+            padding: 3px;
+            margin: 34px;
+            border: 2px solid black;
+
         }
     </style>
 </head>
 
 <body>
-    <div class="box1 box"></div>
-    <div class="box2 box"></div>
-    <div class="box3 box"></div>
-    <div class="box4 box"></div>
+    <div class="parent">
+
+        <div class="box1 box"></div>
+        <div class="box2 box"></div>
+        <div class="box3 box"></div>
+        <div class="box4 box"></div>
+    </div>
 </body>
 
 </html>
