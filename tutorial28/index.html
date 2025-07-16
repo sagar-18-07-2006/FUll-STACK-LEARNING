@@ -1,11 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CSS position </title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            border: 2px solid black;
+            height: 133px;
+            width: 40vw;
+            margin: 3px;
+            padding: 3px;
+        }
+        .box1{
+            background-color: aqua;
+            position: relative;
+            z-index: 1;
+        }
+        .box2
+        {
+            background-color: rgb(170, 49, 154) ;
+            position:relative;
+            left: 89px;
+            z-index: -1;
+            bottom: 60px;
+        }
+        .box3{
+            background-color: darkgreen;
+        }
+        .box4{
+            background-color: gold;
+        }
+    </style>
 </head>
+
 <body>
-    
+    <div class="box1 box"></div>
+    <div class="box2 box"></div>
+    <div class="box3 box"></div>
+    <div class="box4 box"></div>
 </body>
+
 </html>
