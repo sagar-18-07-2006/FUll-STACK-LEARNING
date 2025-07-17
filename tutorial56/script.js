@@ -5,3 +5,7 @@ if (age => 18) {
 } else {
     console.log("You can apply for license")
 }
+let a=9;
+let b=11;
+let c= a>b?(a-b) :(b-a);
+console.log(c);
