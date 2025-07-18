@@ -158,13 +158,15 @@ Inline styles: 1000
         }
         h1{
             color: aqua;
-        }
+  helloworld.html      }
         [data-x="a"]{
             background-color: rebeccapurple;
         }
 h1.yellow ki specifity 11 hoti hai
-minheight \
 max width 
+minheight \
+minheight \
+minheight \
 % is part of parent container\
 display inline karne se width cj=hange nahi kar sakte 
 display inline block karne se kar sakte hai

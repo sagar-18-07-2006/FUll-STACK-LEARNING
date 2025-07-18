@@ -3,35 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sagar Maheshwari - Full Stack Developer</title>
+    <title>Sagar Maheshwari | Interactive Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
     <style>
         :root {
-            --primary-color: #2ecc71;
-            --dark-bg: #0a192f;
-            --light-text: #ccd6f6;
+            --primary: #2ecc71;
+            --secondary: #3498db;
+            --dark: #0a192f;
+            --light: #ccd6f6;
+            --accent: #9b59b6;
             --section-spacing: 80px;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --header-bg: rgba(10, 25, 47, 0.85);
-        }
-
-        [data-theme="light"] {
-            --dark-bg: #f5f7fa;
-            --light-text: #2d3748;
-            --primary-color: #3498db;
-            --card-bg: rgba(255, 255, 255, 0.8);
-            --header-bg: rgba(245, 247, 250, 0.9);
-        }
-
-        [data-theme="neon"] {
-            --primary-color: #ff00ff;
-            --dark-bg: #0a0a1a;
-            --light-text: #e0e0ff;
-            --card-bg: rgba(20, 10, 40, 0.6);
-            --header-bg: rgba(10, 5, 25, 0.9);
         }
 
         * {
@@ -41,14 +27,14 @@
         }
 
         body {
-            background-color: transparent;
-            color: var(--light-text);
+            background-color: var(--dark);
+            color: var(--light);
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
             overflow-x: hidden;
-            transition: background-color 0.5s ease;
+            min-height: 100vh;
         }
-        
+
         #webglCanvas {
             position: fixed;
             top: 0;
@@ -58,10 +44,16 @@
             z-index: -1;
         }
 
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
         /* Header */
         .header {
             padding: 1.5rem 5%;
-            background-color: var(--header-bg);
+            background-color: rgba(10, 25, 47, 0.85);
             position: fixed;
             width: 100%;
             top: 0;
@@ -71,30 +63,31 @@
             align-items: center;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            transition: background-color 0.5s ease;
+            transition: all 0.3s ease;
+        }
+
+        .header.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
             font-size: 1.8rem;
-            color: var(--primary-color);
+            color: var(--primary);
             font-weight: 700;
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
         }
 
-        .logo:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary-color);
-            transition: width 0.3s ease;
+        .logo i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
         }
 
-        .logo:hover:after {
-            width: 100%;
+        .logo:hover i {
+            transform: rotate(15deg);
         }
 
         .nav-links {
@@ -104,36 +97,37 @@
         }
 
         .nav-links a {
-            color: var(--light-text);
+            color: var(--light);
             text-decoration: none;
             transition: color 0.3s;
             font-weight: 500;
             font-size: 1.1rem;
             position: relative;
+            padding: 5px 10px;
         }
 
-        .nav-links a:after {
+        .nav-links a::after {
             content: '';
             position: absolute;
             bottom: -5px;
             left: 0;
             width: 0;
             height: 2px;
-            background: var(--primary-color);
+            background: var(--primary);
             transition: width 0.3s ease;
         }
 
-        .nav-links a:hover:after {
-            width: 100%;
+        .nav-links a:hover {
+            color: var(--primary);
         }
 
-        .nav-links a:hover {
-            color: var(--primary-color);
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* Hero Section */
         .hero {
-            padding: 150px 5% 60px;
+            padding: 180px 5% 60px;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -141,8 +135,6 @@
         }
 
         .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr;
             gap: 3rem;
@@ -151,31 +143,54 @@
 
         .hero-text {
             text-align: center;
+            z-index: 2;
         }
 
         .hero-title {
-            font-size: 3rem;
+            font-size: 3.5rem;
             margin-bottom: 1.5rem;
             font-weight: 700;
-            background: linear-gradient(45deg, var(--primary-color), #3498db);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             line-height: 1.2;
-            height: 4.5rem;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
             overflow: hidden;
         }
 
-        .typewriter-text {
-            display: inline-block;
-            border-right: 2px solid var(--primary-color);
-            padding-right: 5px;
-            animation: blink 0.75s step-end infinite;
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s ease;
         }
 
-        @keyframes blink {
-            from, to { border-color: transparent }
-            50% { border-color: var(--primary-color) }
+        .hero-title.animate::after {
+            transform: scaleX(1);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+            font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .hero-subtitle.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .hero-description {
@@ -183,17 +198,15 @@
             max-width: 600px;
             margin: 0 auto 2rem;
             font-weight: 300;
+            color: #8892b0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
         }
 
-        .hero-about {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-weight: 300;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            border-radius: 10px;
-            border-left: 3px solid var(--primary-color);
+        .hero-description.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .hero-image {
@@ -201,7 +214,7 @@
             position: relative;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            z-index: 2;
         }
 
         .profile-img {
@@ -210,11 +223,13 @@
             height: auto;
             display: block;
             transition: transform 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
         }
         
         .cta-button {
             display: inline-block;
-            background: linear-gradient(45deg, var(--primary-color), #3498db);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             color: white;
             padding: 12px 30px;
             border-radius: 30px;
@@ -223,116 +238,32 @@
             font-size: 1.1rem;
             transition: all 0.3s ease;
             box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
+            border: none;
+            cursor: pointer;
+            margin: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
         }
 
-        .cta-button:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: all 0.3s ease;
-            z-index: -1;
-        }
-
-        .cta-button:hover:before {
-            width: 100%;
+        .cta-button.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
         }
 
-        /* Skills Section */
-        .skills {
-            padding: var(--section-spacing) 5%;
-            background: rgba(10, 25, 47, 0.85);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
         }
 
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .skill-category {
-            background: var(--card-bg);
-            border-radius: 10px;
-            padding: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .skill-category:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            border-color: rgba(46, 204, 113, 0.2);
-        }
-
-        .skill-category h3 {
-            color: var(--primary-color);
-            margin-bottom: 1.5rem;
-            text-align: center;
-            font-size: 1.4rem;
-        }
-
-        .skill-item {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            padding: 0.5rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-        }
-
-        .skill-item:hover {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .skill-icon {
-            width: 40px;
-            height: 40px;
+        .cta-button.secondary:hover {
             background: rgba(46, 204, 113, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            color: var(--primary-color);
-            font-size: 1.2rem;
-        }
-
-        .skill-name {
-            flex: 1;
-            font-weight: 500;
-        }
-
-        .skill-level {
-            width: 100px;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .skill-level-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            background: var(--primary-color);
-            border-radius: 3px;
         }
 
         /* Projects Section */
@@ -341,6 +272,8 @@
             background: rgba(10, 25, 47, 0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            position: relative;
+            z-index: 1;
         }
 
         .section-title {
@@ -349,6 +282,7 @@
             margin-bottom: 3rem;
             position: relative;
             padding-bottom: 15px;
+            color: var(--light);
         }
 
         .section-title::after {
@@ -359,7 +293,7 @@
             transform: translateX(-50%);
             width: 80px;
             height: 4px;
-            background: var(--primary-color);
+            background: var(--primary);
             border-radius: 2px;
         }
 
@@ -372,7 +306,7 @@
         }
 
         .project-card {
-            background: var(--card-bg);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 1.5rem;
             transition: all 0.3s ease;
@@ -380,29 +314,38 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .project-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            border-color: rgba(46, 204, 113, 0.2);
+        .project-card.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
-        .project-card:after {
+        .project-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent, rgba(46, 204, 113, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.5s ease;
         }
 
-        .project-card:hover:after {
-            opacity: 1;
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(46, 204, 113, 0.2);
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
         }
 
         .project-image {
@@ -411,30 +354,28 @@
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
-            background: linear-gradient(45deg, #2ecc71, #3498db);
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 2rem;
-            position: relative;
-            overflow: hidden;
+            font-size: 2.5rem;
+            transition: transform 0.3s ease;
         }
 
-        .project-image:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(0,0,0,0.2));
+        .project-card:hover .project-image {
+            transform: scale(1.05);
         }
 
         .project-title {
-            color: var(--primary-color);
+            color: var(--primary);
             margin-bottom: 0.5rem;
             font-size: 1.4rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--secondary);
         }
         
         .project-date {
@@ -453,30 +394,96 @@
 
         .tech-item {
             background: rgba(46, 204, 113, 0.1);
-            color: var(--primary-color);
+            color: var(--primary);
             padding: 0.3rem 0.8rem;
             border-radius: 15px;
             font-size: 0.9rem;
             border: 1px solid rgba(46, 204, 113, 0.2);
-        }
-
-        .project-link {
-            display: inline-block;
-            margin-top: 15px;
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
             transition: all 0.3s ease;
         }
 
-        .project-link i {
-            margin-left: 5px;
+        .project-card:hover .tech-item {
+            background: rgba(52, 152, 219, 0.2);
+            color: var(--secondary);
+            border-color: rgba(52, 152, 219, 0.3);
+        }
+
+        /* Skills Section */
+        .skills {
+            padding: var(--section-spacing) 5%;
+            background: rgba(10, 25, 47, 0.85);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .skill-category.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-category h3 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-category h3 i {
+            margin-right: 10px;
             transition: transform 0.3s ease;
         }
 
-        .project-link:hover i {
-            transform: translateX(5px);
+        .skill-category:hover h3 i {
+            transform: rotate(15deg);
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            background: rgba(52, 152, 219, 0.1);
+            color: var(--secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            border: 1px solid rgba(52, 152, 219, 0.2);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .skill-item i {
+            margin-right: 8px;
+            font-size: 0.9rem;
+        }
+
+        .skill-category:hover .skill-item {
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--primary);
+            border-color: rgba(46, 204, 113, 0.3);
+            transform: translateY(-3px);
         }
 
         /* Contact Section */
@@ -486,6 +493,56 @@
             background: rgba(10, 25, 47, 0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            position: relative;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .contact-form.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(10, 25, 47, 0.5);
+            color: var(--light);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
         }
 
         .contact-links {
@@ -498,7 +555,7 @@
 
         .contact-link {
             font-size: 2.5rem;
-            color: var(--light-text);
+            color: var(--light);
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -508,29 +565,20 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .contact-link:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary-color), transparent);
+            text-decoration: none;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
         }
 
-        .contact-link:hover:after {
-            opacity: 0.3;
+        .contact-link.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .contact-link:hover {
-            color: var(--primary-color);
-            transform: translateY(-5px);
+            color: var(--primary);
+            transform: translateY(-5px) scale(1.1);
             background: rgba(46, 204, 113, 0.1);
             border-color: rgba(46, 204, 113, 0.3);
         }
@@ -543,42 +591,124 @@
             font-size: 0.9rem;
             color: #8892b0;
             position: relative;
+            z-index: 1;
         }
 
-        .theme-toggle {
+        .footer p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        /* Floating Character */
+        #character-container {
             position: fixed;
-            bottom: 20px;
+            bottom: 30px;
+            right: 30px;
+            z-index: 999;
+            width: 120px;
+            height: 120px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #character-container.visible {
+            opacity: 1;
+        }
+
+        #character-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Loading Screen */
+        #loading {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            z-index: 10000; 
+            transition: opacity 0.6s ease-out; 
+        }
+        
+        #loading span {
+            font-size: 24px;
+            letter-spacing: 2px;
+            margin-bottom: 15px; 
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+        }
+        
+        #progress-container {
+             width: 60%;
+             max-width: 300px;
+             height: 6px;
+             background-color: rgba(255, 255, 255, 0.1);
+             border-radius: 3px;
+             overflow: hidden; 
+             margin-top: 20px;
+        }
+        
+        #progress {
+            height: 100%;
+            width: 0%; 
+            background: linear-gradient(90deg, #00a2ff, #00ffea); 
+            transition: width 0.3s ease; 
+            border-radius: 3px;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .floating {
+            animation: float 4s ease-in-out infinite;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary-color);
+            padding: 15px 25px;
+            background: var(--primary);
             color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001;
+            transform: translateX(120%);
+            transition: transform 0.5s ease;
+            font-weight: 500;
             display: flex;
             align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 100;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-            border: none;
-            transition: all 0.3s ease;
+            gap: 10px;
         }
 
-        .theme-toggle:hover {
-            transform: rotate(20deg) scale(1.1);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        .notification.show {
+            transform: translateX(0);
         }
 
-        .visitor-counter {
-            background: var(--card-bg);
-            padding: 10px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            margin-top: 15px;
-            font-weight: 500;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
+        /* Responsive */
         @media (min-width: 768px) {
             .hero-content {
                 grid-template-columns: 1fr 1fr;
@@ -589,7 +719,7 @@
             }
             
             .hero-title {
-                font-size: 3.5rem;
+                font-size: 4rem;
             }
 
             .profile-img {
@@ -612,15 +742,15 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: var(--dark-bg);
+                background: var(--dark);
                 padding: 1rem;
                 text-align: center;
+                flex-direction: column;
+                gap: 1rem;
             }
 
             .nav-links.active {
                 display: flex;
-                flex-direction: column;
-                gap: 1rem;
             }
 
             .hero-title {
@@ -635,7 +765,7 @@
                 display: block;
                 background: none;
                 border: none;
-                color: var(--light-text);
+                color: var(--light);
                 font-size: 1.5rem;
                 cursor: pointer;
             }
@@ -645,157 +775,50 @@
                 height: 60px;
                 font-size: 2rem;
             }
-
-            .skills-grid {
-                grid-template-columns: 1fr;
+            
+            #character-container {
+                width: 80px;
+                height: 80px;
+                bottom: 20px;
+                right: 20px;
             }
-        }
-        
-        /* Particle Background UI - Hidden by default */
-        #ui, #controls {
-            display: none;
-        }
-        
-        #loading {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: #000;
-            display: flex;
-            flex-direction: column; 
-            justify-content: center;
-            align-items: center;
-            z-index: 10000; 
-            transition: opacity 0.6s ease-out; 
-        }
-        #loading span {
-            font-size: 24px;
-            letter-spacing: 2px;
-            margin-bottom: 15px; 
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-        }
-        #progress-container {
-             width: 60%;
-             max-width: 300px;
-             height: 6px;
-             background-color: rgba(255, 255, 255, 0.1);
-             border-radius: 3px;
-             overflow: hidden; 
-        }
-        #progress {
-            height: 100%;
-            width: 0%; 
-            background: linear-gradient(90deg, #00a2ff, #00ffea); 
-            transition: width 0.3s ease; 
-            border-radius: 3px;
-        }
-
-        /* Easter Egg */
-        .easter-egg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.9);
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.5s ease;
-        }
-
-        .easter-egg.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-
-        .easter-egg-content {
-            background: var(--dark-bg);
-            padding: 2rem;
-            border-radius: 15px;
-            max-width: 500px;
-            text-align: center;
-            border: 2px solid var(--primary-color);
-            position: relative;
-        }
-
-        .easter-egg h2 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
-
-        .easter-egg p {
-            margin-bottom: 1.5rem;
-        }
-
-        .close-egg {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--light-text);
-            font-size: 1.5rem;
-            cursor: pointer;
         }
     </style>
 </head>
 <body>
-    <!-- Particle Background -->
+    <!-- Loading Screen -->
     <div id="loading">
-        <span>Initializing Portfolio...</span>
+        <span>Initializing Interactive Portfolio...</span>
         <div id="progress-container">
              <div id="progress"></div>
         </div>
     </div>
 
-    <!-- Easter Egg -->
-    <div class="easter-egg" id="easterEgg">
-        <div class="easter-egg-content">
-            <button class="close-egg" id="closeEgg">&times;</button>
-            <h2>🎉 Easter Egg Discovered! 🎉</h2>
-            <p>Congratulations on finding this hidden feature! You've proven to have an eye for detail.</p>
-            <p>As a reward, here's a special message:</p>
-            <p>"The best way to predict the future is to create it." - Peter Drucker</p>
-            <p>Keep building amazing things!</p>
-        </div>
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Message sent successfully!</span>
     </div>
 
-    <div id="ui">
-        <div id="info">Shape: Sphere (Click to morph)</div>
-    </div>
-
-    <div id="controls">
-        <button id="shape-btn">Change Shape</button>
-
-        <div id="color-picker">
-            <div class="color-option" data-scheme="fire" style="background: linear-gradient(to bottom right, #ff4500, #ffcc00)"></div>
-            <div class="color-option" data-scheme="neon" style="background: linear-gradient(to bottom right, #ff00ff, #00ffff)"></div>
-            <div class="color-option" data-scheme="nature" style="background: linear-gradient(to bottom right, #00ff00, #66ffcc)"></div>
-            <div class="color-option" data-scheme="rainbow" style="background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet)"></div>
-        </div>
-    </div>
-
+    <!-- Particle Background -->
     <canvas id="webglCanvas"></canvas>
 
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle">
-        <i class="fas fa-moon"></i>
-    </button>
+    <!-- Floating Character -->
+    <div id="character-container">
+        <canvas id="character-canvas"></canvas>
+    </div>
 
     <!-- Portfolio Content -->
     <header class="header">
-        <div class="logo">Sagar</div>
+        <div class="logo" onclick="scrollToTop()">
+            <i class="fas fa-code"></i>
+            Sagar
+        </div>
         <nav>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -803,980 +826,572 @@
     </header>
 
     <section class="hero" id="home">
-        <div class="hero-content">
+        <div class="container hero-content">
             <div class="hero-text">
-                <h1 class="hero-title">
-                    <span id="typewriter" class="typewriter-text"></span>
-                </h1>
-                <p class="hero-description">
-                    I build innovative digital solutions using modern technologies with a focus on clean code and user experience.
+                <h1 class="hero-title" id="main-title">Sagar Maheshwari</h1>
+                <h2 class="hero-subtitle" id="sub-title">Full Stack Developer</h2>
+                <p class="hero-description" id="hero-desc">
+                    I craft innovative digital experiences using modern technologies with a focus on clean code, performance, and user experience.
                 </p>
-                <p class="hero-about">
-                    I'm Sagar Maheshwari, a passionate CS student and full-stack developer with a love for AI-powered digital solutions and clean, interactive web experiences.
-                </p>
-                <a href="#projects" class="cta-button">View My Work</a>
+                <div>
+                    <a href="#projects" class="cta-button" id="work-btn">View My Work</a>
+                    <a href="#contact" class="cta-button secondary" id="contact-btn">Contact Me</a>
+                </div>
             </div>
             <div class="hero-image">
-                <div class="profile-img">
-                    <i class="fas fa-user-circle" style="font-size: 18rem; color: rgba(255,255,255,0.1);"></i>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="skills" id="skills">
-        <h2 class="section-title">Skills & Technologies</h2>
-        <div class="skills-grid">
-            <div class="skill-category">
-                <h3>Frontend</h3>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-js"></i>
-                    </div>
-                    <div class="skill-name">JavaScript</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 90%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-react"></i>
-                    </div>
-                    <div class="skill-name">React</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-vuejs"></i>
-                    </div>
-                    <div class="skill-name">Vue.js</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <div class="skill-name">HTML5</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 95%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <div class="skill-name">CSS3</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 90%"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="skill-category">
-                <h3>Backend</h3>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fab fa-node"></i>
-                    </div>
-                    <div class="skill-name">Node.js</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 80%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-server"></i>
-                    </div>
-                    <div class="skill-name">Express</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="skill-name">MongoDB</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-database"></i>
-                    </div>
-                    <div class="skill-name">Firebase</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 70%"></div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="skill-category">
-                <h3>AI & Data</h3>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="skill-name">Python</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 85%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <div class="skill-name">Data Analysis</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 75%"></div>
-                    </div>
-                </div>
-                <div class="skill-item">
-                    <div class="skill-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="skill-name">Machine Learning</div>
-                    <div class="skill-level">
-                        <div class="skill-level-bar" style="width: 65%"></div>
-                    </div>
+                <div class="profile-img floating">
+                    <i class="fas fa-user-astronaut" style="font-size: 18rem; color: rgba(46, 204, 113, 0.2);"></i>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="projects" id="projects">
-        <h2 class="section-title">Featured Projects</h2>
-        <div class="project-grid">
-            <!-- Bingbox Project -->
-            <div class="project-card" onclick="window.open('https://bingbox-movie-search.netlify.app', '_blank')">
-                <div class="project-image">
-                    <i class="fas fa-film"></i>
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="project-grid">
+                <div class="project-card" id="project1">
+                    <div class="project-image">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h3 class="project-title">Bingbox Movie Search</h3>
+                    <span class="project-date">Jan 2023 - Mar 2023</span>
+                    <div class="project-tech">
+                        <span class="tech-item">React</span>
+                        <span class="tech-item">Node.js</span>
+                        <span class="tech-item">TMDB API</span>
+                    </div>
+                    <p>A movie discovery platform with real-time search and recommendations using the TMDB database.</p>
                 </div>
-                <h3 class="project-title">Bingbox Movie Search</h3>
-                <span class="project-date">Jan 2023 - Mar 2023</span>
-                <div class="project-tech">
-                    <span class="tech-item">React</span>
-                    <span class="tech-item">Node.js</span>
-                    <span class="tech-item">TMDB API</span>
-                </div>
-                <p>A movie discovery platform with real-time search and recommendations using the TMDB database.</p>
-                <a href="https://bingbox-movie-search.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
 
-            <!-- Other Projects -->
-            <div class="project-card" onclick="window.open('https://ecommerce-store-sagar.netlify.app', '_blank')">
-                <div class="project-image">
-                    <i class="fas fa-shopping-cart"></i>
+                <div class="project-card" id="project2">
+                    <div class="project-image">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 class="project-title">E-Commerce Store</h3>
+                    <span class="project-date">Apr 2023 - Jun 2023</span>
+                    <div class="project-tech">
+                        <span class="tech-item">MERN Stack</span>
+                        <span class="tech-item">Redux</span>
+                        <span class="tech-item">Stripe API</span>
+                    </div>
+                    <p>Full-featured online shopping platform with payment integration and inventory management.</p>
                 </div>
-                <h3 class="project-title">E-Commerce Store</h3>
-                <span class="project-date">Apr 2023 - Jun 2023</span>
-                <div class="project-tech">
-                    <span class="tech-item">MERN Stack</span>
-                    <span class="tech-item">Redux</span>
-                    <span class="tech-item">Stripe API</span>
-                </div>
-                <p>Full-featured online shopping platform with payment integration and inventory management.</p>
-                <a href="https://ecommerce-store-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
 
-            <div class="project-card" onclick="window.open('https://task-manager-sagar.netlify.app', '_blank')">
-                <div class="project-image">
-                    <i class="fas fa-tasks"></i>
+                <div class="project-card" id="project3">
+                    <div class="project-image">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h3 class="project-title">Task Management App</h3>
+                    <span class="project-date">Jul 2023 - Sep 2023</span>
+                    <div class="project-tech">
+                        <span class="tech-item">Vue.js</span>
+                        <span class="tech-item">Firebase</span>
+                        <span class="tech-item">JWT</span>
+                    </div>
+                    <p>Collaborative task management system with real-time updates and team collaboration features.</p>
                 </div>
-                <h3 class="project-title">Task Management App</h3>
-                <span class="project-date">Jul 2023 - Sep 2023</span>
-                <div class="project-tech">
-                    <span class="tech-item">Vue.js</span>
-                    <span class="tech-item">Firebase</span>
-                    <span class="tech-item">JWT</span>
+                
+                <div class="project-card" id="project4">
+                    <div class="project-image">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="project-title">Financial Dashboard</h3>
+                    <span class="project-date">Oct 2023 - Dec 2023</span>
+                    <div class="project-tech">
+                        <span class="tech-item">React</span>
+                        <span class="tech-item">D3.js</span>
+                        <span class="tech-item">Express</span>
+                    </div>
+                    <p>Interactive financial data visualization dashboard with real-time updates and analytics.</p>
                 </div>
-                <p>Collaborative task management system with real-time updates and team collaboration features.</p>
-                <a href="https://task-manager-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
-            
-            <div class="project-card" onclick="window.open('https://financial-dashboard-sagar.netlify.app', '_blank')">
-                <div class="project-image">
-                    <i class="fas fa-chart-line"></i>
+        </div>
+    </section>
+
+    <section class="skills" id="skills">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category" id="frontend-skills">
+                    <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
+                    <div class="skill-list">
+                        <span class="skill-item"><i class="fab fa-html5"></i> HTML5</span>
+                        <span class="skill-item"><i class="fab fa-css3-alt"></i> CSS3</span>
+                        <span class="skill-item"><i class="fab fa-js"></i> JavaScript</span>
+                        <span class="skill-item"><i class="fab fa-react"></i> React</span>
+                        <span class="skill-item"><i class="fab fa-vuejs"></i> Vue.js</span>
+                        <span class="skill-item"><i class="fab fa-sass"></i> SASS</span>
+                        <span class="skill-item"><i class="fas fa-mobile-alt"></i> Responsive Design</span>
+                    </div>
                 </div>
-                <h3 class="project-title">Financial Dashboard</h3>
-                <span class="project-date">Oct 2023 - Dec 2023</span>
-                <div class="project-tech">
-                    <span class="tech-item">React</span>
-                    <span class="tech-item">D3.js</span>
-                    <span class="tech-item">Express</span>
+                
+                <div class="skill-category" id="backend-skills">
+                    <h3><i class="fas fa-server"></i> Backend</h3>
+                    <div class="skill-list">
+                        <span class="skill-item"><i class="fab fa-node-js"></i> Node.js</span>
+                        <span class="skill-item"><i class="fab fa-python"></i> Python</span>
+                        <span class="skill-item"><i class="fas fa-database"></i> MongoDB</span>
+                        <span class="skill-item"><i class="fas fa-database"></i> MySQL</span>
+                        <span class="skill-item"><i class="fas fa-bolt"></i> Express</span>
+                        <span class="skill-item"><i class="fab fa-aws"></i> AWS</span>
+                        <span class="skill-item"><i class="fas fa-fire"></i> Firebase</span>
+                    </div>
                 </div>
-                <p>Interactive financial data visualization dashboard with real-time updates and analytics.</p>
-                <a href="https://financial-dashboard-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-            
-            <div class="project-card" onclick="window.open('https://ai-chatbot-sagar.netlify.app', '_blank')">
-                <div class="project-image">
-                    <i class="fas fa-robot"></i>
+                
+                <div class="skill-category" id="tools-skills">
+                    <h3><i class="fas fa-tools"></i> Tools & Other</h3>
+                    <div class="skill-list">
+                        <span class="skill-item"><i class="fab fa-git-alt"></i> Git</span>
+                        <span class="skill-item"><i class="fas fa-terminal"></i> CLI</span>
+                        <span class="skill-item"><i class="fas fa-docker"></i> Docker</span>
+                        <span class="skill-item"><i class="fas fa-shield-alt"></i> Security</span>
+                        <span class="skill-item"><i class="fas fa-rocket"></i> Performance</span>
+                        <span class="skill-item"><i class="fas fa-search"></i> SEO</span>
+                        <span class="skill-item"><i class="fas fa-paint-brush"></i> UI/UX Design</span>
+                    </div>
                 </div>
-                <h3 class="project-title">AI Chatbot</h3>
-                <span class="project-date">Jan 2024 - Mar 2024</span>
-                <div class="project-tech">
-                    <span class="tech-item">Python</span>
-                    <span class="tech-item">TensorFlow</span>
-                    <span class="tech-item">WebSockets</span>
-                </div>
-                <p>Natural language processing chatbot with sentiment analysis and personalized responses.</p>
-                <a href="https://ai-chatbot-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
-            </div>
-            
-            <div class="project-card" onclick="window.open('https://fitness-tracker-sagar.netlify.app', '_blank')">
-                <div class="project-image">
-                    <i class="fas fa-mobile-alt"></i>
-                </div>
-                <h3 class="project-title">Fitness Tracker App</h3>
-                <span class="project-date">Apr 2024 - Present</span>
-                <div class="project-tech">
-                    <span class="tech-item">React Native</span>
-                    <span class="tech-item">Firebase</span>
-                    <span class="tech-item">Health API</span>
-                </div>
-                <p>Mobile application for tracking workouts, nutrition, and health metrics with personalized plans.</p>
-                <a href="https://fitness-tracker-sagar.netlify.app" class="project-link" target="_blank">
-                    View Project <i class="fas fa-external-link-alt"></i>
-                </a>
             </div>
         </div>
     </section>
 
     <section class="contact" id="contact">
-        <h2 class="section-title">Get in Touch</h2>
-        <p style="max-width: 600px; margin: 0 auto 2rem; font-size: 1.2rem;">
-            Have a project in mind or want to discuss opportunities? Feel free to reach out!
-        </p>
-        <div class="contact-links">
-            <a href="mailto:sagarmaheshwari650@gmail.com" class="contact-link">
-                <i class="fas fa-envelope"></i>
-            </a>
-            <a href="https://github.com/sagar-18-07-2006" target="_blank" class="contact-link">
-                <i class="fab fa-github"></i>
-            </a>
-            <a href="https://www.linkedin.com/in/sagar-maheshwari-27665b335/" target="_blank" class="contact-link">
-                <i class="fab fa-linkedin"></i>
-            </a>
-            <a href="https://x.com/Sagar182006?t=C7VJLoAf0Y40sIKIaF9-cA&s=08" target="_blank" class="contact-link">
-                <i class="fab fa-twitter"></i>
-            </a>
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            <p style="max-width: 600px; margin: 0 auto 2rem; font-size: 1.2rem;">
+                Have a project in mind or want to discuss opportunities? Feel free to reach out!
+            </p>
+            
+            <div class="contact-form" id="contact-form">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" rows="5" placeholder="Your message" required></textarea>
+                </div>
+                <button type="submit" class="cta-button" id="send-btn">Send Message</button>
+            </div>
+            
+            <div class="contact-links">
+                <a href="mailto:sagarmaheshwari650@gmail.com" class="contact-link" id="email-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+                <a href="https://github.com/sagar-18-07-2006" target="_blank" class="contact-link" id="github-link">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://www.linkedin.com/in/sagar-maheshwari-27665b335/" target="_blank" class="contact-link" id="linkedin-link">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="https://x.com/Sagar182006?t=C7VJLoAf0Y40sIKIaF9-cA&s=08" target="_blank" class="contact-link" id="twitter-link">
+                    <i class="fab fa-twitter"></i>
+                </a>
+            </div>
         </div>
     </section>
     
     <footer class="footer">
-        <p>© 2024 Sagar Maheshwari. All rights reserved.</p>
-        <p>Designed and developed with ❤️</p>
-        <div class="visitor-counter">
-            <i class="fas fa-users"></i> Visitors: <span id="visitorCount">1,247</span>
+        <div class="container">
+            <p>© 2024 Sagar Maheshwari. All rights reserved.</p>
+            <p>Designed and developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> and JavaScript</p>
+            <p><a href="#" onclick="scrollToTop()">Back to top <i class="fas fa-arrow-up"></i></a></p>
         </div>
     </footer>
 
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://cdn.jsdelivr.net/npm/three@0.163.0/build/three.module.js",
-          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.163.0/examples/jsm/",
-          "animejs": "https://cdn.jsdelivr.net/npm/animejs@3.2.2/lib/anime.es.js",
-          "simplex-noise": "https://cdn.skypack.dev/simplex-noise@4.0.1"
-        }
-      }
-    </script>
-
-    <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-        import anime from 'animejs';
-        import { createNoise3D, createNoise4D } from 'simplex-noise';
-
-        let scene, camera, renderer, controls, clock;
-        let composer, bloomPass; 
-
-        let particlesGeometry, particlesMaterial, particleSystem;
-        let currentPositions, sourcePositions, targetPositions, swarmPositions; 
-        let particleSizes, particleOpacities, particleEffectStrengths; 
-        let noise3D, noise4D; 
-
-        let morphTimeline = null; 
-        let isInitialized = false;
-        let isMorphing = false;
-
-        const CONFIG = {
-            particleCount: 15000,
-            shapeSize: 14,
-            swarmDistanceFactor: 1.5,
-            swirlFactor: 4.0,
-            noiseFrequency: 0.1,
-            noiseTimeScale: 0.04,
-            noiseMaxStrength: 2.8,
-            colorScheme: 'neon',
-            morphDuration: 4000,
-            particleSizeRange: [0.08, 0.25],
-            starCount: 18000,
-            bloomStrength: 1.3,
-            bloomRadius: 0.5,
-            bloomThreshold: 0.05,
-            idleFlowStrength: 0.25,
-            idleFlowSpeed: 0.08,
-            idleRotationSpeed: 0.02,
-            morphSizeFactor: 0.5, 
-            morphBrightnessFactor: 0.6 
-        };
-
-        const SHAPES = [
-            { name: 'Sphere', generator: generateSphere },
-            { name: 'Cube', generator: generateCube },
-            { name: 'Pyramid', generator: generatePyramid },
-            { name: 'Torus', generator: generateTorus },
-            { name: 'Galaxy', generator: generateGalaxy },
-            { name: 'Wave', generator: generateWave }
-        ];
-        let currentShapeIndex = 0;
-
-        const morphState = { progress: 0.0 };
-
-        const COLOR_SCHEMES = {
-            fire: { startHue: 0, endHue: 45, saturation: 0.95, lightness: 0.6 },
-            neon: { startHue: 300, endHue: 180, saturation: 1.0, lightness: 0.65 },
-            nature: { startHue: 90, endHue: 160, saturation: 0.85, lightness: 0.55 },
-            rainbow: { startHue: 0, endHue: 360, saturation: 0.9, lightness: 0.6 }
-        };
-
-        const tempVec = new THREE.Vector3();
-        const sourceVec = new THREE.Vector3();
-        const targetVec = new THREE.Vector3();
-        const swarmVec = new THREE.Vector3();
-        const noiseOffset = new THREE.Vector3();
-        const flowVec = new THREE.Vector3();
-        const bezPos = new THREE.Vector3();
-        const swirlAxis = new THREE.Vector3();
-        const currentVec = new THREE.Vector3();
-
-        function generateSphere(count, size) {
-            const points = new Float32Array(count * 3);
-            const phi = Math.PI * (Math.sqrt(5) - 1);
-            for (let i = 0; i < count; i++) {
-                const y = 1 - (i / (count - 1)) * 2;
-                const radius = Math.sqrt(1 - y * y);
-                const theta = phi * i;
-                const x = Math.cos(theta) * radius;
-                const z = Math.sin(theta) * radius;
-                points[i * 3] = x * size;
-                points[i * 3 + 1] = y * size;
-                points[i * 3 + 2] = z * size;
-            }
-            return points;
-        }
-        function generateCube(count, size) {
-            const points = new Float32Array(count * 3);
-            const halfSize = size / 2;
-            for (let i = 0; i < count; i++) {
-                const face = Math.floor(Math.random() * 6);
-                const u = Math.random() * size - halfSize;
-                const v = Math.random() * size - halfSize;
-                switch (face) {
-                    case 0: points.set([halfSize, u, v], i * 3); break;
-                    case 1: points.set([-halfSize, u, v], i * 3); break;
-                    case 2: points.set([u, halfSize, v], i * 3); break;
-                    case 3: points.set([u, -halfSize, v], i * 3); break;
-                    case 4: points.set([u, v, halfSize], i * 3); break;
-                    case 5: points.set([u, v, -halfSize], i * 3); break;
-                }
-            }
-            return points;
-        }
-        function generatePyramid(count, size) {
-            const points = new Float32Array(count * 3);
-            const halfBase = size / 2;
-            const height = size * 1.2;
-            const apex = new THREE.Vector3(0, height / 2, 0);
-            const baseVertices = [
-                new THREE.Vector3(-halfBase, -height / 2, -halfBase), new THREE.Vector3(halfBase, -height / 2, -halfBase),
-                new THREE.Vector3(halfBase, -height / 2, halfBase), new THREE.Vector3(-halfBase, -height / 2, halfBase)
-            ];
-            const baseArea = size * size;
-            const sideFaceHeight = Math.sqrt(Math.pow(height, 2) + Math.pow(halfBase, 2));
-            const sideFaceArea = 0.5 * size * sideFaceHeight;
-            const totalArea = baseArea + 4 * sideFaceArea;
-            const baseWeight = baseArea / totalArea;
-            const sideWeight = sideFaceArea / totalArea;
-            for (let i = 0; i < count; i++) {
-                const r = Math.random();
-                let p = new THREE.Vector3(); let u, v;
-                if (r < baseWeight) {
-                    u = Math.random(); v = Math.random();
-                    p.lerpVectors(baseVertices[0], baseVertices[1], u);
-                    const p2 = new THREE.Vector3().lerpVectors(baseVertices[3], baseVertices[2], u);
-                    p.lerp(p2, v);
-                } else {
-                    const faceIndex = Math.floor((r - baseWeight) / sideWeight);
-                    const v1 = baseVertices[faceIndex]; const v2 = baseVertices[(faceIndex + 1) % 4];
-                    u = Math.random(); v = Math.random();
-                    if (u + v > 1) { u = 1 - u; v = 1 - v; }
-                    p.addVectors(v1, tempVec.subVectors(v2, v1).multiplyScalar(u));
-                    p.add(tempVec.subVectors(apex, v1).multiplyScalar(v));
-                }
-                points.set([p.x, p.y, p.z], i * 3);
-            }
-            return points;
-        }
-        function generateTorus(count, size) {
-            const points = new Float32Array(count * 3);
-            const R = size * 0.7; const r = size * 0.3;
-            for (let i = 0; i < count; i++) {
-                const theta = Math.random() * Math.PI * 2; const phi = Math.random() * Math.PI * 2;
-                const x = (R + r * Math.cos(phi)) * Math.cos(theta);
-                const y = r * Math.sin(phi);
-                const z = (R + r * Math.cos(phi)) * Math.sin(theta);
-                points[i * 3] = x; points[i * 3 + 1] = y; points[i * 3 + 2] = z;
-            }
-            return points;
-        }
-        function generateGalaxy(count, size) {
-            const points = new Float32Array(count * 3);
-            const arms = 4; const armWidth = 0.6; const bulgeFactor = 0.3;
-            for (let i = 0; i < count; i++) {
-                const t = Math.pow(Math.random(), 1.5); const radius = t * size;
-                const armIndex = Math.floor(Math.random() * arms);
-                const armOffset = (armIndex / arms) * Math.PI * 2;
-                const rotationAmount = radius / size * 6; const angle = armOffset + rotationAmount;
-                const spread = (Math.random() - 0.5) * armWidth * (1 - radius / size);
-                const theta = angle + spread;
-                const x = radius * Math.cos(theta); const z = radius * Math.sin(theta);
-                const y = (Math.random() - 0.5) * size * 0.1 * (1 - radius / size * bulgeFactor);
-                points[i * 3] = x; points[i * 3 + 1] = y; points[i * 3 + 2] = z;
-            }
-            return points;
-        }
-        function generateWave(count, size) {
-            const points = new Float32Array(count * 3);
-            const waveScale = size * 0.4; const frequency = 3;
-            for (let i = 0; i < count; i++) {
-                const u = Math.random() * 2 - 1; const v = Math.random() * 2 - 1;
-                const x = u * size; const z = v * size;
-                const dist = Math.sqrt(u * u + v * v); const angle = Math.atan2(v, u);
-                const y = Math.sin(dist * Math.PI * frequency) * Math.cos(angle * 2) * waveScale * (1 - dist);
-                points[i * 3] = x; points[i * 3 + 1] = y; points[i * 3 + 2] = z;
-            }
-            return points;
-        }
-
-        function init() {
+    <script>
+        // Loading screen progress
+        document.addEventListener('DOMContentLoaded', function() {
             let progress = 0;
             const progressBar = document.getElementById('progress');
             const loadingScreen = document.getElementById('loading');
-            function updateProgress(increment) {
-                progress += increment;
+            const characterContainer = document.getElementById('character-container');
+            
+            function updateProgress() {
+                progress += Math.random() * 15;
                 progressBar.style.width = `${Math.min(100, progress)}%`;
-                if (progress >= 100) {
+                
+                if (progress < 100) {
+                    setTimeout(updateProgress, 200);
+                } else {
                     setTimeout(() => {
                         loadingScreen.style.opacity = '0';
-                        setTimeout(() => { loadingScreen.style.display = 'none'; }, 600);
-                    }, 200);
+                        setTimeout(() => { 
+                            loadingScreen.style.display = 'none'; 
+                            characterContainer.classList.add('visible');
+                            initAnimations();
+                            initParticles();
+                            initCharacter();
+                            animateTitles();
+                        }, 600);
+                    }, 500);
                 }
             }
-
-            clock = new THREE.Clock();
-            noise3D = createNoise3D(() => Math.random());
-            noise4D = createNoise4D(() => Math.random());
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x000308, 0.03);
-            updateProgress(5);
-
-            camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 8, 28); 
-            camera.lookAt(scene.position);
-            updateProgress(5);
-
+            
+            updateProgress();
+        });
+        
+        // Initialize animations
+        function initAnimations() {
+            // Header scroll effect
+            const header = document.querySelector('.header');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 100) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Smooth scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (navLinks.classList.contains('active')) {
+                        navLinks.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Scroll animations for sections
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.project-card, .skill-category, .contact-form, .contact-link');
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate');
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initialize on load
+        }
+        
+        // Animate titles on page load
+        function animateTitles() {
+            setTimeout(() => {
+                document.getElementById('main-title').classList.add('animate');
+            }, 300);
+            
+            setTimeout(() => {
+                document.getElementById('sub-title').classList.add('animate');
+            }, 700);
+            
+            setTimeout(() => {
+                document.getElementById('hero-desc').classList.add('animate');
+            }, 1100);
+            
+            setTimeout(() => {
+                document.getElementById('work-btn').classList.add('animate');
+                document.getElementById('contact-btn').classList.add('animate');
+            }, 1500);
+        }
+        
+        // Particle background
+        function initParticles() {
             const canvas = document.getElementById('webglCanvas');
-            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = 1.1;
-            updateProgress(10);
-
-            controls = new OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true; controls.dampingFactor = 0.05;
-            controls.minDistance = 5; controls.maxDistance = 80;
-            controls.autoRotate = true; controls.autoRotateSpeed = 0.3;
-            updateProgress(5);
-
-            scene.add(new THREE.AmbientLight(0x404060));
-            const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
-            dirLight1.position.set(15, 20, 10); scene.add(dirLight1);
-            const dirLight2 = new THREE.DirectionalLight(0x88aaff, 0.9);
-            dirLight2.position.set(-15, -10, -15); scene.add(dirLight2);
-            updateProgress(10);
-
-            setupPostProcessing(); updateProgress(10);
-            createStarfield(); updateProgress(15);
-            setupParticleSystem(); updateProgress(25);
-
-            window.addEventListener('resize', onWindowResize);
-            document.querySelectorAll('.color-option').forEach(option => {
-                option.addEventListener('click', (e) => {
-                    document.querySelectorAll('.color-option').forEach(o => o.classList.remove('active'));
-                    e.target.classList.add('active');
-                    CONFIG.colorScheme = e.target.dataset.scheme;
-                    updateColors();
-                });
-            });
-            document.querySelector(`.color-option[data-scheme="${CONFIG.colorScheme}"]`).classList.add('active');
-            updateProgress(15);
-
-            // Auto morph every 15 seconds
-            setInterval(triggerMorph, 15000);
+            const ctx = canvas.getContext('2d');
             
-            isInitialized = true;
+            // Set canvas size
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            // Particles array
+            const particles = [];
+            const particleCount = 200;
+            
+            // Particle class
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 3 + 1;
+                    this.speedX = Math.random() * 3 - 1.5;
+                    this.speedY = Math.random() * 3 - 1.5;
+                    this.color = `hsla(${Math.floor(Math.random() * 360)}, 70%, 60%, ${Math.random() * 0.5 + 0.1})`;
+                    this.angle = 0;
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.angle += 0.01;
+                    
+                    if (this.x > canvas.width || this.x < 0) {
+                        this.speedX = -this.speedX;
+                    }
+                    
+                    if (this.y > canvas.height || this.y < 0) {
+                        this.speedY = -this.speedY;
+                    }
+                    
+                    // Add some floating motion
+                    this.x += Math.sin(this.angle) * 0.5;
+                    this.y += Math.cos(this.angle) * 0.5;
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+            
+            // Create particles
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle());
+            }
+            
+            // Animation loop
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw particles
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    
+                    // Connect particles
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        
+                        if (distance < 100) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(46, 204, 113, ${0.2 - distance/500})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
             animate();
-            console.log("Initialization complete.");
-        }
-
-        function setupPostProcessing() {
-            composer = new EffectComposer(renderer);
-            composer.addPass(new RenderPass(scene, camera));
-            bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), CONFIG.bloomStrength, CONFIG.bloomRadius, CONFIG.bloomThreshold);
-            composer.addPass(bloomPass);
-        }
-
-        function createStarfield() {
-            const starVertices = []; const starSizes = []; const starColors = [];
-            const starGeometry = new THREE.BufferGeometry();
-            for (let i = 0; i < CONFIG.starCount; i++) {
-                tempVec.set( THREE.MathUtils.randFloatSpread(400), THREE.MathUtils.randFloatSpread(400), THREE.MathUtils.randFloatSpread(400) );
-                if (tempVec.length() < 100) tempVec.setLength(100 + Math.random() * 300);
-                starVertices.push(tempVec.x, tempVec.y, tempVec.z);
-                starSizes.push(Math.random() * 0.15 + 0.05);
-                const color = new THREE.Color();
-                if (Math.random() < 0.1) { color.setHSL(Math.random(), 0.7, 0.65); } else { color.setHSL(0.6, Math.random() * 0.1, 0.8 + Math.random() * 0.2); }
-                starColors.push(color.r, color.g, color.b);
-            }
-            starGeometry.setAttribute('position', new THREE.Float32BufferAttribute(starVertices, 3));
-            starGeometry.setAttribute('color', new THREE.Float32BufferAttribute(starColors, 3));
-            starGeometry.setAttribute('size', new THREE.Float32BufferAttribute(starSizes, 1));
-            const starMaterial = new THREE.ShaderMaterial({
-                 uniforms: { pointTexture: { value: createStarTexture() } },
-                 vertexShader: `
-                      attribute float size; varying vec3 vColor; varying float vSize;
-                      void main() {
-                           vColor = color; vSize = size; vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                           gl_PointSize = size * (400.0 / -mvPosition.z); gl_Position = projectionMatrix * mvPosition;
-                      }`,
-                 fragmentShader: `
-                      uniform sampler2D pointTexture; varying vec3 vColor; varying float vSize;
-                      void main() {
-                           float alpha = texture2D(pointTexture, gl_PointCoord).a; if (alpha < 0.1) discard;
-                           gl_FragColor = vec4(vColor, alpha * 0.9);
-                      }`,
-                 blending: THREE.AdditiveBlending, depthWrite: false, transparent: true, vertexColors: true
-             });
-            scene.add(new THREE.Points(starGeometry, starMaterial));
-        }
-
-        function createStarTexture() {
-            const size = 64; const canvas = document.createElement('canvas');
-            canvas.width = size; canvas.height = size; const context = canvas.getContext('2d');
-            const gradient = context.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-            gradient.addColorStop(0, 'rgba(255,255,255,1)'); gradient.addColorStop(0.2, 'rgba(255,255,255,0.8)');
-            gradient.addColorStop(0.5, 'rgba(255,255,255,0.3)'); gradient.addColorStop(1, 'rgba(255,255,255,0)');
-            context.fillStyle = gradient; context.fillRect(0, 0, size, size);
-            return new THREE.CanvasTexture(canvas);
-        }
-
-        function setupParticleSystem() {
-            targetPositions = SHAPES.map(shape => shape.generator(CONFIG.particleCount, CONFIG.shapeSize));
-            particlesGeometry = new THREE.BufferGeometry();
-
-            currentPositions = new Float32Array(targetPositions[0]);
-            sourcePositions = new Float32Array(targetPositions[0]);
-            swarmPositions = new Float32Array(CONFIG.particleCount * 3);
-            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(currentPositions, 3));
-
-            particleSizes = new Float32Array(CONFIG.particleCount);
-            particleOpacities = new Float32Array(CONFIG.particleCount);
-            particleEffectStrengths = new Float32Array(CONFIG.particleCount);
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                particleSizes[i] = THREE.MathUtils.randFloat(CONFIG.particleSizeRange[0], CONFIG.particleSizeRange[1]);
-                particleOpacities[i] = 1.0;
-                particleEffectStrengths[i] = 0.0;
-            }
-            particlesGeometry.setAttribute('size', new THREE.BufferAttribute(particleSizes, 1));
-            particlesGeometry.setAttribute('opacity', new THREE.BufferAttribute(particleOpacities, 1));
-            particlesGeometry.setAttribute('aEffectStrength', new THREE.BufferAttribute(particleEffectStrengths, 1));
-
-            const colors = new Float32Array(CONFIG.particleCount * 3);
-            updateColorArray(colors, currentPositions);
-            particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-            particlesMaterial = new THREE.ShaderMaterial({
-                 uniforms: {
-                      pointTexture: { value: createStarTexture() }
-                 },
-                 vertexShader: `
-                      attribute float size;
-                      attribute float opacity;
-                      attribute float aEffectStrength;
-                      varying vec3 vColor;
-                      varying float vOpacity;
-                      varying float vEffectStrength;
-
-                      void main() {
-                           vColor = color;
-                           vOpacity = opacity;
-                           vEffectStrength = aEffectStrength;
-
-                           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-
-                           float sizeScale = 1.0 - vEffectStrength * ${CONFIG.morphSizeFactor.toFixed(2)};
-                           gl_PointSize = size * sizeScale * (400.0 / -mvPosition.z);
-
-                           gl_Position = projectionMatrix * mvPosition;
-                      }
-                 `,
-                 fragmentShader: `
-                      uniform sampler2D pointTexture;
-                      varying vec3 vColor;
-                      varying float vOpacity;
-                      varying float vEffectStrength;
-
-                      void main() {
-                           float alpha = texture2D(pointTexture, gl_PointCoord).a;
-                           if (alpha < 0.05) discard;
-
-                           vec3 finalColor = vColor * (1.0 + vEffectStrength * ${CONFIG.morphBrightnessFactor.toFixed(2)});
-
-                           gl_FragColor = vec4(finalColor, alpha * vOpacity);
-                      }
-                 `,
-                 blending: THREE.AdditiveBlending,
-                 depthTest: true,
-                 depthWrite: false,
-                 transparent: true,
-                 vertexColors: true
+            
+            // Resize handler
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
             });
-
-            particleSystem = new THREE.Points(particlesGeometry, particlesMaterial);
-            scene.add(particleSystem);
         }
-
-        function updateColorArray(colors, positionsArray) {
-            const colorScheme = COLOR_SCHEMES[CONFIG.colorScheme];
-            const center = new THREE.Vector3(0, 0, 0);
-            const maxRadius = CONFIG.shapeSize * 1.1;
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                tempVec.fromArray(positionsArray, i3);
-                const dist = tempVec.distanceTo(center);
-                let hue;
-                if (CONFIG.colorScheme === 'rainbow') {
-                    const normX = (tempVec.x / maxRadius + 1) / 2; const normY = (tempVec.y / maxRadius + 1) / 2; const normZ = (tempVec.z / maxRadius + 1) / 2;
-                    hue = (normX * 120 + normY * 120 + normZ * 120) % 360;
+        
+        // Floating character that follows cursor
+        function initCharacter() {
+            const canvas = document.getElementById('character-canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas size
+            canvas.width = 120;
+            canvas.height = 120;
+            
+            // Character properties
+            let x = canvas.width / 2;
+            let y = canvas.height / 2;
+            let targetX = x;
+            let targetY = y;
+            let easing = 0.1;
+            let eyeDirection = 0;
+            let isLooking = false;
+            let blinkTimer = 0;
+            let isBlinking = false;
+            let blinkDuration = 0;
+            
+            // Draw character
+            function drawCharacter() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // Draw body
+                ctx.fillStyle = '#3498db';
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Draw eyes
+                const eyeX = eyeDirection * 5;
+                ctx.fillStyle = 'white';
+                
+                // Left eye
+                ctx.beginPath();
+                ctx.arc(x - 10, y - 5, 8, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Right eye
+                ctx.beginPath();
+                ctx.arc(x + 10, y - 5, 8, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Pupils
+                ctx.fillStyle = '#2c3e50';
+                
+                // Blinking effect
+                if (!isBlinking) {
+                    ctx.beginPath();
+                    ctx.arc(x - 10 + eyeX, y - 5, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(x + 10 + eyeX, y - 5, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                // Smile
+                ctx.strokeStyle = '#2c3e50';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(x, y + 5, 15, 0, Math.PI);
+                ctx.stroke();
+                
+                // Draw hat
+                ctx.fillStyle = '#e74c3c';
+                ctx.beginPath();
+                ctx.moveTo(x - 25, y - 20);
+                ctx.lineTo(x + 25, y - 20);
+                ctx.lineTo(x + 15, y - 40);
+                ctx.lineTo(x - 15, y - 40);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Hat brim
+                ctx.fillStyle = '#c0392b';
+                ctx.fillRect(x - 30, y - 20, 60, 5);
+            }
+            
+            // Follow cursor
+            document.addEventListener('mousemove', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const container = document.getElementById('character-container');
+                const containerRect = container.getBoundingClientRect();
+                
+                targetX = (e.clientX - containerRect.left) - (canvas.width / 2);
+                targetY = (e.clientY - containerRect.top) - (canvas.height / 2);
+                
+                // Constrain character to container
+                targetX = Math.max(0, Math.min(containerRect.width - canvas.width, targetX));
+                targetY = Math.max(0, Math.min(containerRect.height - canvas.height, targetY));
+                
+                // Calculate eye direction
+                const dx = (e.clientX - containerRect.left) - (x + containerRect.left);
+                eyeDirection = Math.min(Math.max(dx / 20, -5), 5);
+                
+                if (!isLooking) {
+                    isLooking = true;
+                    setTimeout(() => {
+                        isLooking = false;
+                        eyeDirection = 0;
+                    }, 1000);
+                }
+            });
+            
+            // Blinking animation
+            function blink() {
+                isBlinking = true;
+                blinkDuration = 5;
+            }
+            
+            // Animation loop
+            function animate() {
+                // Apply easing
+                const dx = targetX - x;
+                const dy = targetY - y;
+                x += dx * easing;
+                y += dy * easing;
+                
+                // Handle blinking
+                if (blinkDuration > 0) {
+                    blinkDuration--;
                 } else {
-                    hue = THREE.MathUtils.mapLinear( dist, 0, maxRadius, colorScheme.startHue, colorScheme.endHue );
+                    isBlinking = false;
+                    blinkTimer++;
+                    if (blinkTimer > 100 + Math.random() * 100) {
+                        blink();
+                        blinkTimer = 0;
+                    }
                 }
-                const noiseValue = (noise3D(tempVec.x * 0.2, tempVec.y * 0.2, tempVec.z * 0.2) + 1) * 0.5;
-                const saturation = THREE.MathUtils.clamp(colorScheme.saturation * (0.9 + noiseValue * 0.2), 0, 1);
-                const lightness = THREE.MathUtils.clamp(colorScheme.lightness * (0.85 + noiseValue * 0.3), 0.1, 0.9);
-                const color = new THREE.Color().setHSL(hue / 360, saturation, lightness);
-                color.toArray(colors, i3);
+                
+                drawCharacter();
+                requestAnimationFrame(animate);
             }
+            
+            animate();
         }
-
-        function updateColors() {
-            const colors = particlesGeometry.attributes.color.array;
-            updateColorArray(colors, particlesGeometry.attributes.position.array);
-            particlesGeometry.attributes.color.needsUpdate = true;
-        }
-
-        function triggerMorph() {
-            if (isMorphing) return;
-            isMorphing = true; controls.autoRotate = false;
-            sourcePositions.set(currentPositions);
-            const nextShapeIndex = (currentShapeIndex + 1) % SHAPES.length;
-            const nextTargetPositions = targetPositions[nextShapeIndex];
-            const centerOffsetAmount = CONFIG.shapeSize * CONFIG.swarmDistanceFactor;
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                sourceVec.fromArray(sourcePositions, i3); targetVec.fromArray(nextTargetPositions, i3);
-                swarmVec.lerpVectors(sourceVec, targetVec, 0.5);
-                const offsetDir = tempVec.set( noise3D(i * 0.05, 10, 10), noise3D(20, i * 0.05, 20), noise3D(30, 30, i * 0.05) ).normalize();
-                const distFactor = sourceVec.distanceTo(targetVec) * 0.1 + centerOffsetAmount;
-                swarmVec.addScaledVector(offsetDir, distFactor * (0.5 + Math.random() * 0.8));
-                swarmPositions[i3] = swarmVec.x; swarmPositions[i3 + 1] = swarmVec.y; swarmPositions[i3 + 2] = swarmVec.z;
-            }
-            currentShapeIndex = nextShapeIndex;
-            morphState.progress = 0;
-            if (morphTimeline) morphTimeline.pause();
-            morphTimeline = anime({
-                 targets: morphState, progress: 1, duration: CONFIG.morphDuration, easing: 'cubicBezier(0.4, 0.0, 0.2, 1.0)',
-                 complete: () => {
-                     currentPositions.set(targetPositions[currentShapeIndex]);
-                     particlesGeometry.attributes.position.needsUpdate = true;
-                     particleEffectStrengths.fill(0.0);
-                     particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-                     sourcePositions.set(targetPositions[currentShapeIndex]);
-                     updateColors();
-                     isMorphing = false; controls.autoRotate = true;
-                 }
-            });
-        }
-
-        function animate() {
-            requestAnimationFrame(animate);
-            if (!isInitialized) return;
-            const elapsedTime = clock.getElapsedTime();
-            const deltaTime = clock.getDelta();
-            controls.update();
-            const positions = particlesGeometry.attributes.position.array;
-            const effectStrengths = particlesGeometry.attributes.aEffectStrength.array;
-
-            if (isMorphing) {
-                updateMorphAnimation(positions, effectStrengths, elapsedTime, deltaTime);
-            } else {
-                updateIdleAnimation(positions, effectStrengths, elapsedTime, deltaTime);
-            }
-            particlesGeometry.attributes.position.needsUpdate = true;
-            if (isMorphing || particlesGeometry.attributes.aEffectStrength.needsUpdate) {
-                 particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-            }
-            composer.render(deltaTime);
-        }
-
-        function updateMorphAnimation(positions, effectStrengths, elapsedTime, deltaTime) {
-            const t = morphState.progress;
-            const targets = targetPositions[currentShapeIndex];
-            const effectStrength = Math.sin(t * Math.PI);
-            const currentSwirl = effectStrength * CONFIG.swirlFactor * deltaTime * 50;
-            const currentNoise = effectStrength * CONFIG.noiseMaxStrength;
-
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                sourceVec.fromArray(sourcePositions, i3);
-                swarmVec.fromArray(swarmPositions, i3);
-                targetVec.fromArray(targets, i3);
-
-                const t_inv = 1.0 - t; const t_inv_sq = t_inv * t_inv; const t_sq = t * t;
-                bezPos.copy(sourceVec).multiplyScalar(t_inv_sq);
-                bezPos.addScaledVector(swarmVec, 2.0 * t_inv * t);
-                bezPos.addScaledVector(targetVec, t_sq);
-
-                if (currentSwirl > 0.01) {
-                    tempVec.subVectors(bezPos, sourceVec);
-                    swirlAxis.set( noise3D(i * 0.02, elapsedTime * 0.1, 0), noise3D(0, i * 0.02, elapsedTime * 0.1 + 5), noise3D(elapsedTime * 0.1 + 10, 0, i * 0.02) ).normalize();
-                    tempVec.applyAxisAngle(swirlAxis, currentSwirl * (0.5 + Math.random() * 0.5));
-                    bezPos.copy(sourceVec).add(tempVec);
-                }
-
-                if (currentNoise > 0.01) {
-                    const noiseTime = elapsedTime * CONFIG.noiseTimeScale;
-                    noiseOffset.set( noise4D(bezPos.x * CONFIG.noiseFrequency, bezPos.y * CONFIG.noiseFrequency, bezPos.z * CONFIG.noiseFrequency, noiseTime), noise4D(bezPos.x * CONFIG.noiseFrequency + 100, bezPos.y * CONFIG.noiseFrequency + 100, bezPos.z * CONFIG.noiseFrequency + 100, noiseTime), noise4D(bezPos.x * CONFIG.noiseFrequency + 200, bezPos.y * CONFIG.noiseFrequency + 200, bezPos.z * CONFIG.noiseFrequency + 200, noiseTime) );
-                    bezPos.addScaledVector(noiseOffset, currentNoise);
-                }
-
-                positions[i3] = bezPos.x;
-                positions[i3 + 1] = bezPos.y;
-                positions[i3 + 2] = bezPos.z;
-
-                effectStrengths[i] = effectStrength;
-            }
-             particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-        }
-
-        function updateIdleAnimation(positions, effectStrengths, elapsedTime, deltaTime) {
-            const breathScale = 1.0 + Math.sin(elapsedTime * 0.5) * 0.015;
-            const timeScaled = elapsedTime * CONFIG.idleFlowSpeed;
-            const freq = 0.1;
-
-            let needsEffectStrengthReset = false;
-
-            for (let i = 0; i < CONFIG.particleCount; i++) {
-                const i3 = i * 3;
-                sourceVec.fromArray(sourcePositions, i3);
-                tempVec.copy(sourceVec).multiplyScalar(breathScale);
-                flowVec.set( noise4D(tempVec.x * freq, tempVec.y * freq, tempVec.z * freq, timeScaled), noise4D(tempVec.x * freq + 10, tempVec.y * freq + 10, tempVec.z * freq + 10, timeScaled), noise4D(tempVec.x * freq + 20, tempVec.y * freq + 20, tempVec.z * freq + 20, timeScaled) );
-                tempVec.addScaledVector(flowVec, CONFIG.idleFlowStrength);
-                currentVec.fromArray(positions, i3);
-                currentVec.lerp(tempVec, 0.05);
-                positions[i3] = currentVec.x;
-                positions[i3 + 1] = currentVec.y;
-                positions[i3 + 2] = currentVec.z;
-
-                if (effectStrengths[i] !== 0.0) {
-                    effectStrengths[i] = 0.0;
-                    needsEffectStrengthReset = true;
-                }
-            }
-             if (needsEffectStrengthReset) {
-                 particlesGeometry.attributes.aEffectStrength.needsUpdate = true;
-             }
-        }
-
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        init();
-
-    </script>
-    
-    <script>
-        // Mobile Menu Toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navLinks = document.querySelector('.nav-links');
-
-        menuToggle.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
+        
+        // Contact form functionality
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real implementation, you would send this to your server/email service
+            // For this demo, we'll simulate a successful submission
+            const notification = document.getElementById('notification');
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Reset form
+            document.getElementById('contact-form').reset();
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+            
+            // Log the "sent" message to console
+            console.log(`Message sent to Sagar:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
         });
-
-        // Smooth Scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-                // Close mobile menu if open
-                if (navLinks.classList.contains('active')) {
-                    navLinks.classList.remove('active');
-                }
+        
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
             });
-        });
-
-        // Intersection Observer for Animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting) {
-                    entry.target.style.opacity = 1;
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
-
+        }
+        
+        // Project card interactions
         document.querySelectorAll('.project-card').forEach(card => {
-            card.style.opacity = 0;
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.4s ease-out';
-            observer.observe(card);
-        });
-
-        // Typewriter Effect
-        const typewriterText = document.getElementById('typewriter');
-        const texts = ["Full Stack Developer & CS Student", "AI Enthusiast", "Creative Problem Solver"];
-        let textIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        
-        function typeWriter() {
-            const currentText = texts[textIndex];
-            
-            if (isDeleting) {
-                typewriterText.textContent = currentText.substring(0, charIndex - 1);
-                charIndex--;
-            } else {
-                typewriterText.textContent = currentText.substring(0, charIndex + 1);
-                charIndex++;
-            }
-            
-            if (!isDeleting && charIndex === currentText.length) {
-                setTimeout(() => isDeleting = true, 1500);
-            } else if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                textIndex = (textIndex + 1) % texts.length;
-            }
-            
-            setTimeout(typeWriter, isDeleting ? 50 : 100);
-        }
-        
-        setTimeout(typeWriter, 1000);
-
-        // Theme Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = themeToggle.querySelector('i');
-        const body = document.body;
-        let currentTheme = 'dark';
-        
-        themeToggle.addEventListener('click', () => {
-            if (currentTheme === 'dark') {
-                body.setAttribute('data-theme', 'light');
-                themeIcon.classList.remove('fa-moon');
-                themeIcon.classList.add('fa-sun');
-                currentTheme = 'light';
-            } else if (currentTheme === 'light') {
-                body.setAttribute('data-theme', 'neon');
-                themeIcon.classList.remove('fa-sun');
-                themeIcon.classList.add('fa-star');
-                currentTheme = 'neon';
-            } else {
-                body.removeAttribute('data-theme');
-                themeIcon.classList.remove('fa-star');
-                themeIcon.classList.add('fa-moon');
-                currentTheme = 'dark';
-            }
-        });
-
-        // Easter Egg
-        const easterEgg = document.getElementById('easterEgg');
-        const closeEgg = document.getElementById('closeEgg');
-        let clickCount = 0;
-        let lastClickTime = 0;
-        
-        document.addEventListener('click', (e) => {
-            // Check if clicked in top-right corner
-            if (e.clientX > window.innerWidth - 100 && e.clientY < 100) {
-                const currentTime = new Date().getTime();
-                
-                if (currentTime - lastClickTime < 1000) {
-                    clickCount++;
-                } else {
-                    clickCount = 1;
-                }
-                
-                lastClickTime = currentTime;
-                
-                if (clickCount === 3) {
-                    easterEgg.classList.add('active');
-                    clickCount = 0;
-                }
-            }
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.project-title').textContent;
+                alert(`Opening project: ${title}`);
+            });
         });
         
-        closeEgg.addEventListener('click', () => {
-            easterEgg.classList.remove('active');
-        });
-
-        // Visitor Counter
-        const visitorCount = document.getElementById('visitorCount');
-        let count = 1247;
-        
-        // Simulate visitor count increasing
-        setInterval(() => {
-            count += Math.floor(Math.random() * 3);
-            visitorCount.textContent = count.toLocaleString();
-        }, 30000);
+        // Initialize animations on page load
+        window.onload = function() {
+            setTimeout(() => {
+                document.querySelector('.hero-title').classList.add('animate');
+            }, 300);
+        };
     </script>
 </body>
 </html>

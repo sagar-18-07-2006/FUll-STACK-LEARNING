@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevFolio - Interactive Portfolio</title>
+    <title>Sagar Maheshwari | Interactive Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -75,11 +77,17 @@
             font-weight: 700;
             display: flex;
             align-items: center;
+            cursor: pointer;
         }
 
         .logo i {
             margin-right: 10px;
             font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover i {
+            transform: rotate(15deg);
         }
 
         .nav-links {
@@ -95,6 +103,7 @@
             font-weight: 500;
             font-size: 1.1rem;
             position: relative;
+            padding: 5px 10px;
         }
 
         .nav-links a::after {
@@ -147,6 +156,26 @@
             color: transparent;
             line-height: 1.2;
             text-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+
+        .hero-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.8s ease;
+        }
+
+        .hero-title.animate::after {
+            transform: scaleX(1);
         }
 
         .hero-subtitle {
@@ -154,6 +183,14 @@
             margin-bottom: 1rem;
             color: var(--light);
             font-weight: 300;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease;
+        }
+
+        .hero-subtitle.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .hero-description {
@@ -162,6 +199,14 @@
             margin: 0 auto 2rem;
             font-weight: 300;
             color: #8892b0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.2s;
+        }
+
+        .hero-description.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .hero-image {
@@ -196,10 +241,18 @@
             border: none;
             cursor: pointer;
             margin: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.8s ease 0.4s;
+        }
+
+        .cta-button.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .cta-button:hover {
-            transform: translateY(-3px);
+            transform: translateY(-3px) scale(1.05);
             box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
         }
 
@@ -261,6 +314,14 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .project-card.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-card::before {
@@ -299,12 +360,22 @@
             justify-content: center;
             color: white;
             font-size: 2.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover .project-image {
+            transform: scale(1.05);
         }
 
         .project-title {
             color: var(--primary);
             margin-bottom: 0.5rem;
             font-size: 1.4rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--secondary);
         }
         
         .project-date {
@@ -328,6 +399,13 @@
             border-radius: 15px;
             font-size: 0.9rem;
             border: 1px solid rgba(46, 204, 113, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .tech-item {
+            background: rgba(52, 152, 219, 0.2);
+            color: var(--secondary);
+            border-color: rgba(52, 152, 219, 0.3);
         }
 
         /* Skills Section */
@@ -351,6 +429,14 @@
             border-radius: 10px;
             padding: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .skill-category.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .skill-category h3 {
@@ -363,6 +449,11 @@
 
         .skill-category h3 i {
             margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .skill-category:hover h3 i {
+            transform: rotate(15deg);
         }
 
         .skill-list {
@@ -380,11 +471,19 @@
             border: 1px solid rgba(52, 152, 219, 0.2);
             display: flex;
             align-items: center;
+            transition: all 0.3s ease;
         }
 
         .skill-item i {
             margin-right: 8px;
             font-size: 0.9rem;
+        }
+
+        .skill-category:hover .skill-item {
+            background: rgba(46, 204, 113, 0.2);
+            color: var(--primary);
+            border-color: rgba(46, 204, 113, 0.3);
+            transform: translateY(-3px);
         }
 
         /* Contact Section */
@@ -404,6 +503,14 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .contact-form.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .form-group {
@@ -459,11 +566,19 @@
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-decoration: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .contact-link.animate {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .contact-link:hover {
             color: var(--primary);
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.1);
             background: rgba(46, 204, 113, 0.1);
             border-color: rgba(46, 204, 113, 0.3);
         }
@@ -486,6 +601,12 @@
         .footer a {
             color: var(--primary);
             text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
         }
 
         /* Floating Character */
@@ -497,6 +618,12 @@
             width: 120px;
             height: 120px;
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        #character-container.visible {
+            opacity: 1;
         }
 
         #character-canvas {
@@ -524,6 +651,7 @@
             margin-bottom: 15px; 
             color: #fff;
             font-family: 'Poppins', sans-serif;
+            text-align: center;
         }
         
         #progress-container {
@@ -533,6 +661,7 @@
              background-color: rgba(255, 255, 255, 0.1);
              border-radius: 3px;
              overflow: hidden; 
+             margin-top: 20px;
         }
         
         #progress {
@@ -545,24 +674,38 @@
 
         /* Animations */
         @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
         }
 
         .floating {
             animation: float 4s ease-in-out infinite;
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            z-index: 1001;
+            transform: translateX(120%);
+            transition: transform 0.5s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .fade-in.appear {
-            opacity: 1;
-            transform: translateY(0);
+        .notification.show {
+            transform: translateX(0);
         }
 
         /* Responsive */
@@ -645,10 +788,16 @@
 <body>
     <!-- Loading Screen -->
     <div id="loading">
-        <span>Initializing Portfolio...</span>
+        <span>Initializing Interactive Portfolio...</span>
         <div id="progress-container">
              <div id="progress"></div>
         </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span>Message sent successfully!</span>
     </div>
 
     <!-- Particle Background -->
@@ -661,9 +810,9 @@
 
     <!-- Portfolio Content -->
     <header class="header">
-        <div class="logo">
+        <div class="logo" onclick="scrollToTop()">
             <i class="fas fa-code"></i>
-            DevFolio
+            Sagar
         </div>
         <nav>
             <ul class="nav-links">
@@ -679,14 +828,14 @@
     <section class="hero" id="home">
         <div class="container hero-content">
             <div class="hero-text">
-                <h1 class="hero-title">Sagar Maheshwari</h1>
-                <h2 class="hero-subtitle">Full Stack Developer</h2>
-                <p class="hero-description">
+                <h1 class="hero-title" id="main-title">Sagar Maheshwari</h1>
+                <h2 class="hero-subtitle" id="sub-title">Full Stack Developer</h2>
+                <p class="hero-description" id="hero-desc">
                     I craft innovative digital experiences using modern technologies with a focus on clean code, performance, and user experience.
                 </p>
                 <div>
-                    <a href="#projects" class="cta-button">View My Work</a>
-                    <a href="#contact" class="cta-button secondary">Contact Me</a>
+                    <a href="#projects" class="cta-button" id="work-btn">View My Work</a>
+                    <a href="#contact" class="cta-button secondary" id="contact-btn">Contact Me</a>
                 </div>
             </div>
             <div class="hero-image">
@@ -701,7 +850,7 @@
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
             <div class="project-grid">
-                <div class="project-card fade-in">
+                <div class="project-card" id="project1">
                     <div class="project-image">
                         <i class="fas fa-film"></i>
                     </div>
@@ -715,7 +864,7 @@
                     <p>A movie discovery platform with real-time search and recommendations using the TMDB database.</p>
                 </div>
 
-                <div class="project-card fade-in">
+                <div class="project-card" id="project2">
                     <div class="project-image">
                         <i class="fas fa-shopping-cart"></i>
                     </div>
@@ -729,7 +878,7 @@
                     <p>Full-featured online shopping platform with payment integration and inventory management.</p>
                 </div>
 
-                <div class="project-card fade-in">
+                <div class="project-card" id="project3">
                     <div class="project-image">
                         <i class="fas fa-tasks"></i>
                     </div>
@@ -743,7 +892,7 @@
                     <p>Collaborative task management system with real-time updates and team collaboration features.</p>
                 </div>
                 
-                <div class="project-card fade-in">
+                <div class="project-card" id="project4">
                     <div class="project-image">
                         <i class="fas fa-chart-line"></i>
                     </div>
@@ -764,7 +913,7 @@
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div class="skills-container">
-                <div class="skill-category fade-in">
+                <div class="skill-category" id="frontend-skills">
                     <h3><i class="fas fa-laptop-code"></i> Frontend</h3>
                     <div class="skill-list">
                         <span class="skill-item"><i class="fab fa-html5"></i> HTML5</span>
@@ -777,7 +926,7 @@
                     </div>
                 </div>
                 
-                <div class="skill-category fade-in">
+                <div class="skill-category" id="backend-skills">
                     <h3><i class="fas fa-server"></i> Backend</h3>
                     <div class="skill-list">
                         <span class="skill-item"><i class="fab fa-node-js"></i> Node.js</span>
@@ -790,7 +939,7 @@
                     </div>
                 </div>
                 
-                <div class="skill-category fade-in">
+                <div class="skill-category" id="tools-skills">
                     <h3><i class="fas fa-tools"></i> Tools & Other</h3>
                     <div class="skill-list">
                         <span class="skill-item"><i class="fab fa-git-alt"></i> Git</span>
@@ -813,33 +962,33 @@
                 Have a project in mind or want to discuss opportunities? Feel free to reach out!
             </p>
             
-            <div class="contact-form fade-in">
+            <div class="contact-form" id="contact-form">
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" id="name" placeholder="Your name">
+                    <input type="text" id="name" placeholder="Your name" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Your email">
+                    <input type="email" id="email" placeholder="Your email" required>
                 </div>
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" rows="5" placeholder="Your message"></textarea>
+                    <textarea id="message" rows="5" placeholder="Your message" required></textarea>
                 </div>
-                <button type="submit" class="cta-button">Send Message</button>
+                <button type="submit" class="cta-button" id="send-btn">Send Message</button>
             </div>
             
             <div class="contact-links">
-                <a href="mailto:sagarmaheshwari650@gmail.com" class="contact-link">
+                <a href="mailto:sagarmaheshwari650@gmail.com" class="contact-link" id="email-link">
                     <i class="fas fa-envelope"></i>
                 </a>
-                <a href="https://github.com/sagar-18-07-2006" target="_blank" class="contact-link">
+                <a href="https://github.com/sagar-18-07-2006" target="_blank" class="contact-link" id="github-link">
                     <i class="fab fa-github"></i>
                 </a>
-                <a href="https://www.linkedin.com/in/sagar-maheshwari-27665b335/" target="_blank" class="contact-link">
+                <a href="https://www.linkedin.com/in/sagar-maheshwari-27665b335/" target="_blank" class="contact-link" id="linkedin-link">
                     <i class="fab fa-linkedin"></i>
                 </a>
-                <a href="https://x.com/Sagar182006?t=C7VJLoAf0Y40sIKIaF9-cA&s=08" target="_blank" class="contact-link">
+                <a href="https://x.com/Sagar182006?t=C7VJLoAf0Y40sIKIaF9-cA&s=08" target="_blank" class="contact-link" id="twitter-link">
                     <i class="fab fa-twitter"></i>
                 </a>
             </div>
@@ -850,7 +999,7 @@
         <div class="container">
             <p>© 2024 Sagar Maheshwari. All rights reserved.</p>
             <p>Designed and developed with <i class="fas fa-heart" style="color: #e74c3c;"></i> and JavaScript</p>
-            <p><a href="#">Back to top <i class="fas fa-arrow-up"></i></a></p>
+            <p><a href="#" onclick="scrollToTop()">Back to top <i class="fas fa-arrow-up"></i></a></p>
         </div>
     </footer>
 
@@ -860,9 +1009,10 @@
             let progress = 0;
             const progressBar = document.getElementById('progress');
             const loadingScreen = document.getElementById('loading');
+            const characterContainer = document.getElementById('character-container');
             
             function updateProgress() {
-                progress += Math.random() * 10;
+                progress += Math.random() * 15;
                 progressBar.style.width = `${Math.min(100, progress)}%`;
                 
                 if (progress < 100) {
@@ -872,9 +1022,11 @@
                         loadingScreen.style.opacity = '0';
                         setTimeout(() => { 
                             loadingScreen.style.display = 'none'; 
+                            characterContainer.classList.add('visible');
                             initAnimations();
                             initParticles();
                             initCharacter();
+                            animateTitles();
                         }, 600);
                     }, 500);
                 }
@@ -920,19 +1072,41 @@
                 });
             });
             
-            // Fade-in animations
-            const fadeElements = document.querySelectorAll('.fade-in');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('appear');
+            // Scroll animations for sections
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.project-card, .skill-category, .contact-form, .contact-link');
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.3;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('animate');
                     }
                 });
-            }, { threshold: 0.1 });
+            };
             
-            fadeElements.forEach(element => {
-                observer.observe(element);
-            });
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Initialize on load
+        }
+        
+        // Animate titles on page load
+        function animateTitles() {
+            setTimeout(() => {
+                document.getElementById('main-title').classList.add('animate');
+            }, 300);
+            
+            setTimeout(() => {
+                document.getElementById('sub-title').classList.add('animate');
+            }, 700);
+            
+            setTimeout(() => {
+                document.getElementById('hero-desc').classList.add('animate');
+            }, 1100);
+            
+            setTimeout(() => {
+                document.getElementById('work-btn').classList.add('animate');
+                document.getElementById('contact-btn').classList.add('animate');
+            }, 1500);
         }
         
         // Particle background
@@ -946,7 +1120,7 @@
             
             // Particles array
             const particles = [];
-            const particleCount = 150;
+            const particleCount = 200;
             
             // Particle class
             class Particle {
@@ -956,12 +1130,14 @@
                     this.size = Math.random() * 3 + 1;
                     this.speedX = Math.random() * 3 - 1.5;
                     this.speedY = Math.random() * 3 - 1.5;
-                    this.color = `rgba(46, 204, 113, ${Math.random() * 0.5 + 0.1})`;
+                    this.color = `hsla(${Math.floor(Math.random() * 360)}, 70%, 60%, ${Math.random() * 0.5 + 0.1})`;
+                    this.angle = 0;
                 }
                 
                 update() {
                     this.x += this.speedX;
                     this.y += this.speedY;
+                    this.angle += 0.01;
                     
                     if (this.x > canvas.width || this.x < 0) {
                         this.speedX = -this.speedX;
@@ -970,6 +1146,10 @@
                     if (this.y > canvas.height || this.y < 0) {
                         this.speedY = -this.speedY;
                     }
+                    
+                    // Add some floating motion
+                    this.x += Math.sin(this.angle) * 0.5;
+                    this.y += Math.cos(this.angle) * 0.5;
                 }
                 
                 draw() {
@@ -1040,6 +1220,9 @@
             let easing = 0.1;
             let eyeDirection = 0;
             let isLooking = false;
+            let blinkTimer = 0;
+            let isBlinking = false;
+            let blinkDuration = 0;
             
             // Draw character
             function drawCharacter() {
@@ -1067,13 +1250,17 @@
                 
                 // Pupils
                 ctx.fillStyle = '#2c3e50';
-                ctx.beginPath();
-                ctx.arc(x - 10 + eyeX, y - 5, 4, 0, Math.PI * 2);
-                ctx.fill();
                 
-                ctx.beginPath();
-                ctx.arc(x + 10 + eyeX, y - 5, 4, 0, Math.PI * 2);
-                ctx.fill();
+                // Blinking effect
+                if (!isBlinking) {
+                    ctx.beginPath();
+                    ctx.arc(x - 10 + eyeX, y - 5, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.beginPath();
+                    ctx.arc(x + 10 + eyeX, y - 5, 4, 0, Math.PI * 2);
+                    ctx.fill();
+                }
                 
                 // Smile
                 ctx.strokeStyle = '#2c3e50';
@@ -1098,13 +1285,20 @@
             }
             
             // Follow cursor
-            canvas.addEventListener('mousemove', (e) => {
+            document.addEventListener('mousemove', (e) => {
                 const rect = canvas.getBoundingClientRect();
-                targetX = e.clientX - rect.left;
-                targetY = e.clientY - rect.top;
+                const container = document.getElementById('character-container');
+                const containerRect = container.getBoundingClientRect();
+                
+                targetX = (e.clientX - containerRect.left) - (canvas.width / 2);
+                targetY = (e.clientY - containerRect.top) - (canvas.height / 2);
+                
+                // Constrain character to container
+                targetX = Math.max(0, Math.min(containerRect.width - canvas.width, targetX));
+                targetY = Math.max(0, Math.min(containerRect.height - canvas.height, targetY));
                 
                 // Calculate eye direction
-                const dx = targetX - x;
+                const dx = (e.clientX - containerRect.left) - (x + containerRect.left);
                 eyeDirection = Math.min(Math.max(dx / 20, -5), 5);
                 
                 if (!isLooking) {
@@ -1116,6 +1310,12 @@
                 }
             });
             
+            // Blinking animation
+            function blink() {
+                isBlinking = true;
+                blinkDuration = 5;
+            }
+            
             // Animation loop
             function animate() {
                 // Apply easing
@@ -1124,12 +1324,74 @@
                 x += dx * easing;
                 y += dy * easing;
                 
+                // Handle blinking
+                if (blinkDuration > 0) {
+                    blinkDuration--;
+                } else {
+                    isBlinking = false;
+                    blinkTimer++;
+                    if (blinkTimer > 100 + Math.random() * 100) {
+                        blink();
+                        blinkTimer = 0;
+                    }
+                }
+                
                 drawCharacter();
                 requestAnimationFrame(animate);
             }
             
             animate();
         }
+        
+        // Contact form functionality
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real implementation, you would send this to your server/email service
+            // For this demo, we'll simulate a successful submission
+            const notification = document.getElementById('notification');
+            
+            // Show notification
+            notification.classList.add('show');
+            
+            // Reset form
+            document.getElementById('contact-form').reset();
+            
+            // Hide notification after 3 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+            
+            // Log the "sent" message to console
+            console.log(`Message sent to Sagar:\nName: ${name}\nEmail: ${email}\nMessage: ${message}`);
+        });
+        
+        // Scroll to top function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Project card interactions
+        document.querySelectorAll('.project-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.project-title').textContent;
+                alert(`Opening project: ${title}`);
+            });
+        });
+        
+        // Initialize animations on page load
+        window.onload = function() {
+            setTimeout(() => {
+                document.querySelector('.hero-title').classList.add('animate');
+            }, 300);
+        };
     </script>
 </body>
 </html>
