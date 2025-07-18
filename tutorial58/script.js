@@ -18,3 +18,11 @@ function sum(a, b, c = 3) {
 console.log(sum(11, 57.2))
 console.log(sum(11, .2))
 console.log(sum(25, 45,1))
+
+const func1= (x=45)=>{
+    console.log("I am an Arrow function ");
+    console.log(x);
+}
+func1(54);
+func1(93);
+func1();
