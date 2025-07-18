@@ -10,4 +10,5 @@ console.log(a[5]);
 console.log(a.length);
 let name="Sagar";
 let friend="None";
+console.log(`his name is ${name} and his friend name is ${friend}`)
 
