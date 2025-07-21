@@ -27,4 +27,5 @@
 
 // console.log(arr);
 let nums=[1,2,3,4,5];
+console.log(nums.splice(1,3))
 
