@@ -19,3 +19,4 @@ let b ="Harry";
 console.log(b.toUpperCase());
 console.log(b.toLowerCase());
 console.log(b.slice(1,4));//4 include nahi hai 
+console.log(b.replace("rr","dd"));

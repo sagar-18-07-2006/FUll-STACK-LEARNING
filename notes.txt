@@ -184,3 +184,6 @@ Rounded Corners: Borders can have rounded corners using border-radius, while out
 
             overflow: auto;
             diffrence ye hai ki auto mien scroll bar jab aayega jab overflow hoga magar scroll mien hamesha aayega
+The CSS rule display: flex; on .box tells the browser:
+
+"Hey, arrange all the child elements in a row by default, side-by-side."
