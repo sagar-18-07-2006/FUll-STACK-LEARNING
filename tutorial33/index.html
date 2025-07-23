@@ -1,55 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exercise 4</title>
-    <meta name="description" content="did ing it ]">
-    <style>
-        :root{
-            --main:#040303;
-            --primary:#3A4E48;
-            --secondprimary:#6A7B76;
-            --side:#8B9D83;
-            --words:#BEB0A7;
-        }
-        *{
-            margin: 0;padding: 0;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Exercise 4</title>
+  <meta name="description" content="did ing it ]" />
+  <style>
+    :root {
+      --main: #040303;
+      --primary: #3A4E48;
+      --secondprimary: #6A7B76;
+      --side: #8B9D83;
+      --words: #BEB0A7;
+    }
 
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        }
-        body {
-            background-color: var(--main);
-        }
-        nav{
-            background-color: var(--primary);
-        }
-        ul{
-            display: flex;
-            justify-content: right;
-        }
-        li{
-            color:var(--side);
-            list-style: none;
-            text-align: center;
-            width: 6rem;
-        }
-        li:hover{
-    color: var(--secondprimary);
-        }
-        a{
-            text-decoration: none;
-        }
-    </style>
+    body {
+      background-color: var(--main);
+      font-family: Arial, sans-serif;
+    }
+
+    nav {
+      background-color: var(--primary);
+      padding: 1rem 2rem;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      color: var(--words);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    ul {
+      display: flex;
+      justify-content: right;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    li {
+      color: var(--side);
+      text-align: center;
+      width: 6rem;
+      transition: color 0.3s ease-in-out;
+    }
+
+    li:hover {
+      color: var(--secondprimary);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
 </head>
 <body>
-   <nav>
-    <ul>
-       <a href="/tutorial10/index.html"><li class="button" >Home</li></a> 
-        <li class="button">Contact</li>
-        <li class="button">Services</li>
-        <li class="button">Maintainence</li>
-    </ul>
-   </nav>
+  <nav>
+    <div class="nav-container">
+      <div class="logo">MySite</div>
+      <ul>
+        <li><a href="/tutorial10/index.html">Home</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Services</a></li>
+        <li><a href="#">Maintenance</a></li>
+      </ul>
+    </div>
+  </nav>
 </body>
 </html>
