@@ -5,11 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercise 4</title>
     <meta name="description" content="did ing it ]">
+    <style>
+        :root{
+            --main:#040303;
+            --primary:#3A4E48;
+            --secondprimary:#6A7B76;
+            --side:#8B9D83;
+            --words:#BEB0A7;
+        }
+        *{
+            margin: 0;padding: 0;
+
+
+        }
+        body {
+            background-color: var(--main);
+        }
+        nav{
+            background-color: var(--primary);
+        }
+        ul{
+            display: flex;
+            justify-content: right;
+        }
+        li{
+            color:var(--side);
+            list-style: none;
+            text-align: center;
+            width: 6rem;
+        }
+        li:hover{
+    color: var(--secondprimary);
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
    <nav>
     <ul>
-        <li class="button">Home</li>
+       <a href="/tutorial10/index.html"><li class="button" >Home</li></a> 
         <li class="button">Contact</li>
         <li class="button">Services</li>
         <li class="button">Maintainence</li>
