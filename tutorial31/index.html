@@ -19,16 +19,34 @@
         } */
         @media only screen and (max-width:800px) {
             body{
-                background-color: rgb(97, 33, 164);
+                background-color: rgb(115, 182, 27);
 
             }
-            
+            .boxes{
+                flex-direction: column;
+            }
+        }
+        .boxes{
+            display: flex;
+        }
+        .box{
+            width: 344px;
+            height: 344px;
+            background-color: steelblue ;
+            padding: 3px;
+            margin: 3px;
+
         }
     </style>
 </head>     
 <body>
     <div>
         Hey I am a good guy
+    </div>
+    <div class="boxes">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
     </div>
 </body>
 </html>
