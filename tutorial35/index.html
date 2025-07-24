@@ -12,22 +12,51 @@
     .box::first-line{
         color: rgb(117, 29, 248);
     } */
-    .boxes{
+    /* .boxes{
         color: rgb(117, 29, 248);
     }
     .box{
 
         border: 2px solid black;
     }
-    [datacolor="primary"]{
+   p,a,.box,.boxes,div [datacolor="primary"]{
         background-color: #b81212;
-    }
+    } */
+     /* .box:nth-child(even){
+        background-color: rgb(38, 208, 38);
+     }
+      */
+      /* .box:nth-last-child(1){
+        background-color: pink;
+      } */
+       .boxes::before{
+        content: "Sagar is good";
+        color: rgb(131, 12, 243);
+       }
+       .boxes::after{
+        content: "sagar is still good";
+        
+        color: rgb(200, 34, 50);
+       }
+       ::selection{
+        background-color: black;
+        color: aqua;
+       }
+       .box::first-letter{
+        color: rgb(78, 94, 240);
+        font-size: xx-large;
+       }
+       input::placeholder{
+        color: yellow;
+        font-size: large;
+       }
 </style>
 <body>
         <div class="boxes">
             <div class="box" datacolor="primary">I am a first box</div>
             <div class="box">I am a box</div>
             <div class="box">I am a box</div>
+            <input type="text" placeholder="Type your name here">
         </div>
 </body>
 </html>
