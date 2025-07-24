@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More on Css selectors</title>
+</head>
+<style>
+      /* .boxes:first-child{
+        background-color: rgb(173, 231, 26);
+    }
+    .box::first-line{
+        color: rgb(117, 29, 248);
+    } */
+    .boxes{
+        color: rgb(117, 29, 248);
+    }
+    .box{
+
+        border: 2px solid black;
+    }
+    [datacolor="primary"]{
+        background-color: #b81212;
+    }
+</style>
+<body>
+        <div class="boxes">
+            <div class="box" datacolor="primary">I am a first box</div>
+            <div class="box">I am a box</div>
+            <div class="box">I am a box</div>
+        </div>
+</body>
+</html>
